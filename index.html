@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>New Tab</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230f172a'/><text y='70' font-size='55' x='50' text-anchor='middle' fill='white'>N</text></svg>">
+  <!-- Cyan outline home icon favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300e5ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg>">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -34,7 +35,7 @@
     .greeting { font-size: 1.3rem; opacity: 0.9; margin-bottom: 0.5rem; }
     .time { font-size: 6.5rem; font-weight: 300; letter-spacing: -2px; margin-bottom: 0.2rem; }
     .date { font-size: 1.3rem; opacity: 0.9; margin-bottom: 1.5rem; }
-    .weather { font-size: 1.1rem; opacity: 0.85; margin-bottom: 2rem; }
+    .weather { font-size: 1.1rem; opacity: 0.85; margin-bottom: 2rem; min-height: 1.4em; }
     .search-box { width: 90%; max-width: 520px; position: relative; margin-bottom: 2.5rem; }
     .search-box input {
       width: 100%; padding: 14px 48px 14px 20px;
@@ -63,7 +64,6 @@
       font-size: 1rem; font-style: italic; opacity: 0.85; padding: 0 16px;
     }
 
-    /* Settings */
     #settings-btn {
       position: fixed; top: 18px; left: 18px; width: 42px; height: 42px;
       border-radius: 11px; background: rgba(255,255,255,0.12);
@@ -178,7 +178,7 @@
       <input type="text" id="city" placeholder="Kathmandu">
     </div>
     <div class="group">
-      <div class="check"><input type="checkbox" id="showWeather" checked><label for="showWeather">Show Weather</label></div>
+      <div class="check"><input type="checkbox" id="showWeather"><label for="showWeather">Show Weather</label></div>
     </div>
 
     <div class="group">
@@ -247,7 +247,7 @@
       textMode: "light",
       userName: "",
       city: "Kathmandu",
-      showWeather: true,
+      showWeather: false,
       engine: "google",
       showQuote: true,
       showLinks: true,
@@ -267,7 +267,6 @@
     const $ = id => document.getElementById(id);
 
     function apply() {
-      // Background
       if (s.bgType === "image") {
         $("bg").style.backgroundImage = `url('${s.imgUrl}')`;
         $("bg").style.opacity = "1";
@@ -280,7 +279,6 @@
         document.body.style.background = "linear-gradient(135deg, #0f0c29, #302b63, #24243e)";
       }
 
-      // Overlay + auto dim
       let op = s.overlay;
       if (s.autoDim) {
         const h = new Date().getHours();
@@ -288,22 +286,16 @@
       }
       $("overlay").style.background = `rgba(0,0,0,${op/100})`;
 
-      // Text mode
       document.body.className = s.textMode === "dark" ? "dark-text" : "";
-
-      // Clock size
       $("time").style.fontSize = (s.clockSize / 10) + "rem";
 
-      // Visibility
       $("quote").style.display = s.showQuote ? "block" : "none";
       $("links").style.display = s.showLinks ? "flex" : "none";
       $("weather").style.display = s.showWeather ? "block" : "none";
 
-      // Search
       const engines = {google:"https://www.google.com/search", duckduckgo:"https://duckduckgo.com/", bing:"https://www.bing.com/search"};
       $("searchForm").action = engines[s.engine];
 
-      // Form values
       $("bgType").value = s.bgType;
       $("imgUrl").value = s.imgUrl;
       $("solidColor").value = s.solidColor;
@@ -325,6 +317,7 @@
       renderEdit();
       updateGreeting();
       if (s.showWeather) loadWeather();
+      else $("weather").textContent = "";
     }
 
     function toggleBg() {
@@ -358,11 +351,21 @@
     }
 
     async function loadWeather() {
-      if (!s.city.trim()) { $("weather").textContent = ""; return; }
+      if (!s.city.trim()) {
+        $("weather").textContent = "";
+        return;
+      }
       try {
-        const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C");
-        $("weather").textContent = await res.text();
-      } catch(e) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 4000);
+        const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C", {signal: controller.signal});
+        clearTimeout(timeout);
+        if (res.ok) {
+          $("weather").textContent = (await res.text()).trim();
+        } else {
+          $("weather").textContent = "";
+        }
+      } catch (e) {
         $("weather").textContent = "";
       }
     }
@@ -425,7 +428,6 @@
     $("bgType").onchange = toggleBg;
 
     $("saveBtn").onclick = () => {
-      // collect links
       const items = document.querySelectorAll(".link-edit");
       s.links = [];
       items.forEach(item => {
@@ -466,7 +468,6 @@
       }
     };
 
-    // Init
     apply();
     updateClock();
     setInterval(updateClock, 1000);
