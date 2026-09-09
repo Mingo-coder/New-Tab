@@ -24,7 +24,7 @@
     #bg {
       position: absolute; inset: 0;
       background-size: cover; background-position: center;
-      z-index: -2; opacity: 0; transition: opacity 0.5s;
+      z-index: -2; opacity: 0; transition: opacity 0.8s ease;
     }
     #overlay {
       position: absolute; inset: 0;
@@ -32,98 +32,86 @@
       z-index: -1; transition: background 0.4s;
     }
 
-    /* Main content wrapper for scaling */
     #main {
       display: flex;
       flex-direction: column;
       align-items: center;
-      transform-origin: center center;
-      transition: transform 0.3s ease;
     }
 
-    .greeting { font-size: 1.3rem; opacity: 0.9; margin-bottom: 0.5rem; }
-    .time { font-size: 6.5rem; font-weight: 300; letter-spacing: -2px; margin-bottom: 0.2rem; }
+    .greeting { font-size: 1.3rem; opacity: 0.9; margin-bottom: 0.5rem; transition: font-size 0.3s; }
+    .time { font-size: 6.5rem; font-weight: 300; letter-spacing: -2px; margin-bottom: 0.2rem; transition: font-size 0.3s; }
     .date { font-size: 1.3rem; opacity: 0.9; margin-bottom: 1.5rem; }
     .weather { font-size: 1.1rem; opacity: 0.85; margin-bottom: 2rem; min-height: 1.4em; }
 
-    /* Liquid Glass Search */
-    .search-box {
-      width: 90%; max-width: 520px; position: relative; margin-bottom: 2.5rem;
-    }
+    .search-box { width: 90%; max-width: 520px; position: relative; margin-bottom: 2.5rem; }
     .search-box input {
       width: 100%; padding: 15px 50px 15px 22px;
-      font-size: 1.1rem; border: 1px solid rgba(255,255,255,0.18);
+      font-size: 1.1rem; border: 1px solid rgba(255,255,255,0.15);
       border-radius: 50px;
-      background: rgba(255,255,255,0.10);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(255,255,255,0.09);
+      backdrop-filter: blur(10px) saturate(160%);
+      -webkit-backdrop-filter: blur(10px) saturate(160%);
       color: inherit; outline: none;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
-      transition: all 0.3s ease;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: all 0.25s ease;
     }
     .search-box input:focus {
-      background: rgba(255,255,255,0.16);
-      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.25);
     }
     .search-box button {
       position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
       background: none; border: none; color: inherit; font-size: 1.2rem; cursor: pointer;
     }
 
-    .links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; max-width: 720px; }
+    .links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; max-width: 720px; transition: transform 0.3s; }
     .link {
       display: flex; flex-direction: column; align-items: center;
       text-decoration: none; color: inherit; width: 74px; opacity: 0.92;
-      transition: 0.25s;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
-    .link:hover { opacity: 1; transform: translateY(-5px); }
+    .link:hover { opacity: 1; transform: translateY(-3px); }
 
-    /* Round Liquid Glass icons */
     .link-icon {
       width: 56px; height: 56px; border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(8px) saturate(150%);
+      -webkit-backdrop-filter: blur(8px) saturate(150%);
+      border: 1px solid rgba(255,255,255,0.15);
       display: flex; align-items: center; justify-content: center;
       font-size: 1.45rem; margin-bottom: 8px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
-      transition: 0.25s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: background 0.2s ease, border-color 0.2s ease;
     }
     .link:hover .link-icon {
-      background: rgba(255,255,255,0.20);
-      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.28);
     }
 
     .quote {
-      position: absolute; bottom: 32px; max-width: 580px;
+      position: absolute; bottom: 32px; max-width: 600px;
       font-size: 1rem; font-style: italic; opacity: 0.85; padding: 0 16px;
+      transition: font-size 0.3s;
     }
 
-    /* Settings button - liquid glass */
     #settings-btn {
       position: fixed; top: 18px; left: 18px; width: 44px; height: 44px;
       border-radius: 14px;
-      background: rgba(255,255,255,0.10);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.18);
-      color: inherit; font-size: 1.3rem; cursor: pointer; z-index: 100;
+      background: rgba(255,255,255,0.09);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: inherit; cursor: pointer; z-index: 100;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
-      transition: 0.25s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      transition: 0.2s;
     }
-    #settings-btn:hover {
-      background: rgba(255,255,255,0.18);
-      transform: scale(1.05);
-    }
+    #settings-btn:hover { background: rgba(255,255,255,0.16); transform: scale(1.05); }
+    #settings-btn svg { width: 22px; height: 22px; }
 
-    /* Sidebar */
     #sidebar {
       position: fixed; top: 0; left: -350px; width: 330px; height: 100%;
-      background: rgba(15,23,42,0.85);
-      backdrop-filter: blur(24px) saturate(160%);
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      background: rgba(15,23,42,0.88);
+      backdrop-filter: blur(14px);
       border-right: 1px solid rgba(255,255,255,0.1);
       z-index: 200; padding: 20px 16px 50px; overflow-y: auto;
       color: #e2e8f0; transition: left 0.3s ease;
@@ -139,30 +127,30 @@
     .sidebar-header h2 { font-size: 1.2rem; }
     #close-btn { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
 
-    .group { margin-bottom: 18px; }
-    .group label { display: block; font-size: 0.75rem; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; }
+    .group { margin-bottom: 16px; }
+    .group label { display: block; font-size: 0.72rem; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
     .group select, .group input[type=text], .group input[type=color] {
       width: 100%; padding: 8px 10px; border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06);
       color: white; font-size: 0.9rem;
     }
     .group input[type=range] { width: 100%; }
-    .check { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-    .check label { text-transform: none; color: #e2e8f0; font-size: 0.9rem; margin: 0; }
+    .check { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+    .check label { text-transform: none; color: #e2e8f0; font-size: 0.9rem; margin: 0; letter-spacing: 0; }
 
     .link-edit { display: flex; gap: 5px; margin-bottom: 6px; }
     .link-edit input { flex: 1; }
-    .link-edit button { width: 30px; background: rgba(239,68,68,0.25); border: none; color: #fca5a5; border-radius: 6px; cursor: pointer; }
-    #add-link { width: 100%; padding: 8px; margin-top: 6px; background: rgba(59,130,246,0.2); border: 1px dashed #60a5fa; color: #93c5fd; border-radius: 8px; cursor: pointer; }
+    .link-edit button { width: 28px; background: rgba(239,68,68,0.25); border: none; color: #fca5a5; border-radius: 6px; cursor: pointer; }
+    #add-link { width: 100%; padding: 8px; margin-top: 6px; background: rgba(59,130,246,0.18); border: 1px dashed #60a5fa; color: #93c5fd; border-radius: 8px; cursor: pointer; }
 
-    .btns { display: flex; gap: 8px; margin-top: 24px; }
+    .btns { display: flex; gap: 8px; margin-top: 22px; }
     .btns button { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; }
     .save { background: #3b82f6; color: white; }
     .reset { background: rgba(255,255,255,0.1); color: #e2e8f0; }
 
     body.dark-text { color: #0f172a; }
-    body.dark-text .search-box input { background: rgba(0,0,0,0.1); color: #0f172a; border-color: rgba(0,0,0,0.15); }
-    body.dark-text .link-icon { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.12); }
+    body.dark-text .search-box input { background: rgba(0,0,0,0.08); color: #0f172a; border-color: rgba(0,0,0,0.12); }
+    body.dark-text .link-icon { background: rgba(0,0,0,0.07); border-color: rgba(0,0,0,0.1); }
   </style>
 </head>
 <body>
@@ -170,11 +158,12 @@
   <div id="overlay"></div>
 
   <button id="settings-btn" title="Settings">
-   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-     <circle cx="12" cy="12" r="3"></circle>
-     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-   </svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
   </button>
+
   <div id="sidebar-overlay"></div>
 
   <div id="sidebar">
@@ -183,9 +172,22 @@
       <button id="close-btn">×</button>
     </div>
 
+    <!-- Individual Scales -->
     <div class="group">
-      <label>UI Scale</label>
-      <input type="range" id="uiScale" min="70" max="130" value="100">
+      <label>Greeting Scale</label>
+      <input type="range" id="scaleGreeting" min="70" max="140" value="100">
+    </div>
+    <div class="group">
+      <label>Time Scale</label>
+      <input type="range" id="scaleTime" min="50" max="120" value="100">
+    </div>
+    <div class="group">
+      <label>Quote Scale</label>
+      <input type="range" id="scaleQuote" min="70" max="140" value="100">
+    </div>
+    <div class="group">
+      <label>Quick Links Scale</label>
+      <input type="range" id="scaleLinks" min="70" max="140" value="100">
     </div>
 
     <div class="group">
@@ -194,6 +196,7 @@
         <option value="gradient">Gradient</option>
         <option value="image">Image URL</option>
         <option value="solid">Solid Color</option>
+        <option value="unsplash">Unsplash Auto</option>
       </select>
     </div>
     <div class="group" id="imgGroup" style="display:none">
@@ -204,6 +207,17 @@
       <label>Color</label>
       <input type="color" id="solidColor" value="#0f172a">
     </div>
+    <div class="group" id="unsplashGroup" style="display:none">
+      <label>Change Interval</label>
+      <select id="unsplashInterval">
+        <option value="1">Every 1 hour</option>
+        <option value="3">Every 3 hours</option>
+        <option value="6">Every 6 hours</option>
+        <option value="12">Every 12 hours</option>
+        <option value="24" selected>Every 24 hours</option>
+      </select>
+    </div>
+
     <div class="group">
       <label>Overlay Darkness</label>
       <input type="range" id="overlayVal" min="0" max="80" value="40">
@@ -221,10 +235,6 @@
     </div>
     <div class="group">
       <div class="check"><input type="checkbox" id="showSec"><label for="showSec">Show seconds</label></div>
-    </div>
-    <div class="group">
-      <label>Clock Size</label>
-      <input type="range" id="clockSize" min="40" max="100" value="65">
     </div>
     <div class="group">
       <label>Text Mode</label>
@@ -257,7 +267,6 @@
     <div class="group">
       <div class="check"><input type="checkbox" id="showSearch" checked><label for="showSearch">Show Search Bar</label></div>
     </div>
-
     <div class="group">
       <div class="check"><input type="checkbox" id="showQuote" checked><label for="showQuote">Show Quote</label></div>
     </div>
@@ -296,25 +305,50 @@
   <div class="quote" id="quote"></div>
 
   <script>
+    // Zen + classic quotes
     const quotes = [
       {t:"The only way to do great work is to love what you do.", a:"Steve Jobs"},
       {t:"Stay hungry, stay foolish.", a:"Steve Jobs"},
+      {t:"Peace comes from within. Do not seek it without.", a:"Buddha"},
+      {t:"You only lose what you cling to.", a:"Buddha"},
+      {t:"The mind is everything. What you think you become.", a:"Buddha"},
+      {t:"Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.", a:"Buddha"},
+      {t:"Three things cannot be long hidden: the sun, the moon, and the truth.", a:"Buddha"},
+      {t:"Health is the greatest gift, contentment the greatest wealth, faithfulness the best relationship.", a:"Buddha"},
+      {t:"In the end, only three things matter: how much you loved, how gently you lived, and how gracefully you let go of things not meant for you.", a:"Buddha"},
+      {t:"When you realize nothing is lacking, the whole world belongs to you.", a:"Lao Tzu"},
+      {t:"Be content with what you have; rejoice in the way things are.", a:"Lao Tzu"},
+      {t:"The journey of a thousand miles begins with a single step.", a:"Lao Tzu"},
+      {t:"Silence is a source of great strength.", a:"Lao Tzu"},
+      {t:"Nature does not hurry, yet everything is accomplished.", a:"Lao Tzu"},
       {t:"The future belongs to those who believe in the beauty of their dreams.", a:"Eleanor Roosevelt"},
       {t:"It does not matter how slowly you go as long as you do not stop.", a:"Confucius"},
       {t:"Success is not final, failure is not fatal.", a:"Winston Churchill"},
-      {t:"Believe you can and you're halfway there.", a:"Theodore Roosevelt"},
-      {t:"Do what you can, with what you have, where you are.", a:"Theodore Roosevelt"}
+      {t:"Believe you can and you're halfway there.", a:"Theodore Roosevelt"}
+    ];
+
+    // Curated Unsplash collection (nature / calm)
+    const unsplashImages = [
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80",
+      "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1920&q=80",
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=80",
+      "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1920&q=80",
+      "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=80",
+      "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920&q=80",
+      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80",
+      "https://images.unsplash.com/photo-1518173946687-a4c8642c9142?w=1920&q=80",
+      "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1920&q=80"
     ];
 
     const defaults = {
       bgType: "gradient",
-      imgUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920",
+      imgUrl: unsplashImages[0],
       solidColor: "#0f172a",
       overlay: 40,
       autoDim: true,
       clockFormat: "24",
       showSec: false,
-      clockSize: 65,
       textMode: "light",
       userName: "",
       city: "Kathmandu",
@@ -323,7 +357,12 @@
       showSearch: true,
       showQuote: true,
       showLinks: true,
-      uiScale: 100,
+      scaleGreeting: 100,
+      scaleTime: 100,
+      scaleQuote: 100,
+      scaleLinks: 100,
+      unsplashInterval: 24,
+      lastUnsplashChange: 0,
       links: [
         {name:"Gmail", url:"https://mail.google.com", icon:"📧"},
         {name:"YouTube", url:"https://youtube.com", icon:"▶️"},
@@ -339,8 +378,13 @@
     const $ = id => document.getElementById(id);
 
     function apply() {
-      // Background
-      if (s.bgType === "image") {
+      // Background handling
+      if (s.bgType === "unsplash") {
+        checkUnsplashRotation();
+        $("bg").style.backgroundImage = `url('${s.imgUrl}')`;
+        $("bg").style.opacity = "1";
+        document.body.style.background = "transparent";
+      } else if (s.bgType === "image") {
         $("bg").style.backgroundImage = `url('${s.imgUrl}')`;
         $("bg").style.opacity = "1";
         document.body.style.background = "transparent";
@@ -352,7 +396,7 @@
         document.body.style.background = "linear-gradient(135deg, #0f0c29, #302b63, #24243e)";
       }
 
-      // Overlay + auto dim
+      // Overlay
       let op = s.overlay;
       if (s.autoDim) {
         const h = new Date().getHours();
@@ -360,18 +404,19 @@
       }
       $("overlay").style.background = `rgba(0,0,0,${op/100})`;
 
-      // Text + scale
-      document.body.className = s.textMode === "dark" ? "dark-text" : "";
-      $("time").style.fontSize = (s.clockSize / 10) + "rem";
-      $("main").style.transform = `scale(${s.uiScale / 100})`;
+      // Scales
+      $("greeting").style.fontSize = (1.3 * s.scaleGreeting / 100) + "rem";
+      $("time").style.fontSize = (6.5 * s.scaleTime / 100) + "rem";
+      $("quote").style.fontSize = (1.0 * s.scaleQuote / 100) + "rem";
+      $("links").style.transform = `scale(${s.scaleLinks / 100})`;
 
-      // Visibility
+      document.body.className = s.textMode === "dark" ? "dark-text" : "";
+
       $("quote").style.display = s.showQuote ? "block" : "none";
       $("links").style.display = s.showLinks ? "flex" : "none";
       $("weather").style.display = s.showWeather ? "block" : "none";
       $("searchBox").style.display = s.showSearch ? "block" : "none";
 
-      // Search engine
       const engines = {google:"https://www.google.com/search", duckduckgo:"https://duckduckgo.com/", bing:"https://www.bing.com/search"};
       $("searchForm").action = engines[s.engine];
 
@@ -383,7 +428,6 @@
       $("autoDim").checked = s.autoDim;
       $("clockFormat").value = s.clockFormat;
       $("showSec").checked = s.showSec;
-      $("clockSize").value = s.clockSize;
       $("textMode").value = s.textMode;
       $("userName").value = s.userName;
       $("city").value = s.city;
@@ -392,7 +436,11 @@
       $("showSearch").checked = s.showSearch;
       $("showQuote").checked = s.showQuote;
       $("showLinks").checked = s.showLinks;
-      $("uiScale").value = s.uiScale;
+      $("scaleGreeting").value = s.scaleGreeting;
+      $("scaleTime").value = s.scaleTime;
+      $("scaleQuote").value = s.scaleQuote;
+      $("scaleLinks").value = s.scaleLinks;
+      $("unsplashInterval").value = s.unsplashInterval;
 
       toggleBg();
       renderLinks();
@@ -407,6 +455,18 @@
       const t = $("bgType").value;
       $("imgGroup").style.display = t === "image" ? "block" : "none";
       $("colorGroup").style.display = t === "solid" ? "block" : "none";
+      $("unsplashGroup").style.display = t === "unsplash" ? "block" : "none";
+    }
+
+    function checkUnsplashRotation() {
+      const now = Date.now();
+      const intervalMs = s.unsplashInterval * 60 * 60 * 1000;
+      if (!s.lastUnsplashChange || (now - s.lastUnsplashChange) > intervalMs) {
+        const next = unsplashImages[Math.floor(Math.random() * unsplashImages.length)];
+        s.imgUrl = next;
+        s.lastUnsplashChange = now;
+        localStorage.setItem("ntp-safe", JSON.stringify(s));
+      }
     }
 
     function updateClock() {
@@ -434,27 +494,15 @@
     }
 
     async function loadWeather() {
-      if (!s.city.trim()) {
-        $("weather").textContent = "";
-        return;
-      }
+      if (!s.city.trim()) { $("weather").textContent = ""; return; }
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 3500);
-        const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C", {
-          signal: controller.signal,
-          mode: "cors"
-        });
+        const timeout = setTimeout(() => controller.abort(), 3000);
+        const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C", {signal: controller.signal});
         clearTimeout(timeout);
-        if (res.ok) {
-          const text = (await res.text()).trim();
-          $("weather").textContent = text || "";
-        } else {
-          $("weather").textContent = "";
-        }
-      } catch (e) {
-        $("weather").textContent = "";
-      }
+        if (res.ok) $("weather").textContent = (await res.text()).trim();
+        else $("weather").textContent = "";
+      } catch(e) { $("weather").textContent = ""; }
     }
 
     function showQuote() {
@@ -467,10 +515,8 @@
       $("links").innerHTML = "";
       s.links.forEach(l => {
         const a = document.createElement("a");
-        a.href = l.url;
-        a.target = "_blank";
-        a.className = "link";
-        a.innerHTML = `<div class="link-icon">${l.icon || "🔗"}</div><span>${l.name}</span>`;
+        a.href = l.url; a.target = "_blank"; a.className = "link";
+        a.innerHTML = `<div class="link-icon">${l.icon||"🔗"}</div><span>${l.name}</span>`;
         $("links").appendChild(a);
       });
     }
@@ -481,17 +527,14 @@
       s.links.forEach((l, i) => {
         const d = document.createElement("div");
         d.className = "link-edit";
-        d.innerHTML = `<input value="${l.icon}" style="width:45px" placeholder="icon">
+        d.innerHTML = `<input value="${l.icon}" style="width:42px" placeholder="icon">
                        <input value="${l.name}" placeholder="Name">
                        <input value="${l.url}" placeholder="URL">
                        <button data-i="${i}">×</button>`;
         box.appendChild(d);
       });
       box.querySelectorAll("button").forEach(b => {
-        b.onclick = () => {
-          s.links.splice(b.dataset.i, 1);
-          renderEdit();
-        };
+        b.onclick = () => { s.links.splice(b.dataset.i, 1); renderEdit(); };
       });
     }
 
@@ -514,6 +557,12 @@
 
     $("bgType").onchange = toggleBg;
 
+    // Live scale previews
+    $("scaleGreeting").oninput = () => $("greeting").style.fontSize = (1.3 * $("scaleGreeting").value / 100) + "rem";
+    $("scaleTime").oninput = () => $("time").style.fontSize = (6.5 * $("scaleTime").value / 100) + "rem";
+    $("scaleQuote").oninput = () => $("quote").style.fontSize = (1.0 * $("scaleQuote").value / 100) + "rem";
+    $("scaleLinks").oninput = () => $("links").style.transform = `scale(${$("scaleLinks").value / 100})`;
+
     $("saveBtn").onclick = () => {
       const items = document.querySelectorAll(".link-edit");
       s.links = [];
@@ -533,7 +582,6 @@
       s.autoDim = $("autoDim").checked;
       s.clockFormat = $("clockFormat").value;
       s.showSec = $("showSec").checked;
-      s.clockSize = +$("clockSize").value;
       s.textMode = $("textMode").value;
       s.userName = $("userName").value;
       s.city = $("city").value;
@@ -542,7 +590,11 @@
       s.showSearch = $("showSearch").checked;
       s.showQuote = $("showQuote").checked;
       s.showLinks = $("showLinks").checked;
-      s.uiScale = +$("uiScale").value;
+      s.scaleGreeting = +$("scaleGreeting").value;
+      s.scaleTime = +$("scaleTime").value;
+      s.scaleQuote = +$("scaleQuote").value;
+      s.scaleLinks = +$("scaleLinks").value;
+      s.unsplashInterval = +$("unsplashInterval").value;
 
       localStorage.setItem("ntp-safe", JSON.stringify(s));
       apply();
@@ -557,20 +609,21 @@
       }
     };
 
-    // Live scale preview
-    $("uiScale").oninput = () => {
-      $("main").style.transform = `scale(${$("uiScale").value / 100})`;
-    };
-
     apply();
     updateClock();
     setInterval(updateClock, 1000);
     showQuote();
     setInterval(showQuote, 300000);
 
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape") closeSide();
-    });
+    // Check wallpaper rotation every 10 minutes
+    setInterval(() => {
+      if (s.bgType === "unsplash") {
+        checkUnsplashRotation();
+        $("bg").style.backgroundImage = `url('${s.imgUrl}')`;
+      }
+    }, 10 * 60 * 1000);
+
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeSide(); });
   </script>
 </body>
 </html>
