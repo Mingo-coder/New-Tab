@@ -33,29 +33,31 @@
     #main { display: flex; flex-direction: column; align-items: center; }
 
     .greeting { font-size: 1.3rem; opacity: 0.9; margin-bottom: 0.6rem; transition: font-size 0.3s; }
-    .time { font-size: 6.5rem; font-weight: 300; letter-spacing: -2px; margin-bottom: 0.35rem; transition: font-size 0.3s; }
+    .time { font-size: 6.5rem; font-weight: 300; letter-spacing: -2px; margin-bottom: 0.4rem; transition: font-size 0.3s; }
 
-    /* Date row: Weekday left + dates right */
+    /* Date row - larger weekday + stacked dates on right */
     .date-row {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: center;
-      gap: 18px;
-      margin-bottom: 2.2rem;
+      gap: 22px;
+      margin-bottom: 2.4rem;
       transition: transform 0.3s;
     }
     .weekday {
-      font-size: 1.55rem;
+      font-size: 2.1rem;
       font-weight: 500;
       opacity: 0.95;
+      letter-spacing: -0.3px;
     }
     .dates-right {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      line-height: 1.25;
-      opacity: 0.85;
-      font-size: 0.95rem;
+      line-height: 1.35;
+      opacity: 0.82;
+      font-size: 0.92rem;
+      text-align: left;
     }
 
     .weather { font-size: 1.1rem; opacity: 0.85; margin-bottom: 2rem; min-height: 1.4em; }
@@ -84,7 +86,7 @@
     }
     .link:hover { opacity: 1; transform: translateY(-4px); }
 
-    /* Always liquid glass - no change on hover */
+    /* Permanent liquid glass - no hover style changes */
     .link-icon {
       width: 56px; height: 56px; border-radius: 50%;
       background: rgba(255,255,255,0.10);
@@ -315,8 +317,8 @@
     <div class="date-row" id="dateRow">
       <div class="weekday" id="weekday">Wednesday</div>
       <div class="dates-right">
-        <div id="engDate">9 September 2026</div>
-        <div id="nepDate">२०८३ भदौ २४</div>
+        <div id="engDate">9 September, 2026</div>
+        <div id="nepDate">२४ भदौ, २०८३</div>
       </div>
     </div>
 
@@ -368,7 +370,6 @@
       }
     };
 
-    // Only Zen & Buddhism quotes
     const quotes = [
       {t:"Peace comes from within. Do not seek it without.", a:"Buddha"},
       {t:"You only lose what you cling to.", a:"Buddha"},
@@ -404,7 +405,7 @@
       let bsDay = adDay + 16;
       if (bsDay > 30) { bsDay -= 30; bsMonth++; }
       if (bsMonth > 12) { bsMonth -= 12; bsYear++; }
-      return `${bsYear} ${nepaliMonths[bsMonth-1]} ${bsDay}`;
+      return `${bsDay} ${nepaliMonths[bsMonth-1]}, ${bsYear}`;
     }
 
     const defaults = {
@@ -574,9 +575,10 @@
 
       $("weekday").textContent = s.lang === "ne" ? weekdayNe : weekdayEn;
 
+      // "9 September, 2026"
       $("engDate").textContent = now.toLocaleDateString("en-US", {
         day: "numeric", month: "long", year: "numeric"
-      });
+      }).replace(/(\d+) (\w+) (\d+)/, "$1 $2, $3");
 
       $("nepDate").textContent = adToBs(now.getFullYear(), now.getMonth()+1, now.getDate());
     }
@@ -594,12 +596,21 @@
       if (!s.city.trim()) { $("weather").textContent = ""; return; }
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 3000);
-        const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C", {signal: controller.signal});
+        const timeout = setTimeout(() => controller.abort(), 2500);
+        const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C", {
+          signal: controller.signal,
+          mode: "cors"
+        });
         clearTimeout(timeout);
-        if (res.ok) $("weather").textContent = (await res.text()).trim();
-        else $("weather").textContent = "";
-      } catch(e) { $("weather").textContent = ""; }
+        if (res.ok) {
+          const txt = (await res.text()).trim();
+          $("weather").textContent = txt || "";
+        } else {
+          $("weather").textContent = "";
+        }
+      } catch (e) {
+        $("weather").textContent = "";
+      }
     }
 
     function showQuote() {
