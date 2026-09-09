@@ -13,7 +13,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-weight: 500;
       color: white;
       text-align: center;
       overflow: hidden;
@@ -32,10 +33,9 @@
     }
     #main { display: flex; flex-direction: column; align-items: center; }
 
-    .greeting { font-size: 1.3rem; opacity: 0.9; margin-bottom: 0.6rem; transition: font-size 0.3s; }
-    .time { font-size: 6.5rem; font-weight: 300; letter-spacing: -2px; margin-bottom: 0.4rem; transition: font-size 0.3s; }
+    .greeting { font-size: 1.3rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.6rem; transition: font-size 0.3s; }
+    .time { font-size: 6.5rem; font-weight: 400; letter-spacing: -2px; margin-bottom: 0.4rem; transition: font-size 0.3s; }
 
-    /* Date row - larger weekday + stacked dates on right */
     .date-row {
       display: flex;
       align-items: center;
@@ -45,10 +45,11 @@
       transition: transform 0.3s;
     }
     .weekday {
-      font-size: 2.1rem;
-      font-weight: 500;
+      font-size: 2.15rem;
+      font-weight: 600;
       opacity: 0.95;
-      letter-spacing: -0.3px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
     .dates-right {
       display: flex;
@@ -56,16 +57,18 @@
       align-items: flex-start;
       line-height: 1.35;
       opacity: 0.82;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
+      font-weight: 500;
       text-align: left;
     }
 
-    .weather { font-size: 1.1rem; opacity: 0.85; margin-bottom: 2rem; min-height: 1.4em; }
+    .weather { font-size: 1.1rem; font-weight: 500; opacity: 0.85; margin-bottom: 2rem; min-height: 1.4em; }
 
     .search-box { width: 90%; max-width: 520px; position: relative; margin-bottom: 2.5rem; }
     .search-box input {
       width: 100%; padding: 15px 50px 15px 22px;
-      font-size: 1.1rem; border: 1px solid rgba(255,255,255,0.15);
+      font-size: 1.1rem; font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 50px;
       background: rgba(255,255,255,0.09);
       backdrop-filter: blur(10px);
@@ -82,16 +85,17 @@
     .link {
       display: flex; flex-direction: column; align-items: center;
       text-decoration: none; color: inherit; width: 74px; opacity: 0.92;
+      font-weight: 500;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
     .link:hover { opacity: 1; transform: translateY(-4px); }
 
-    /* Permanent liquid glass - no hover style changes */
+    /* Fixed liquid glass - absolutely no hover style change */
     .link-icon {
       width: 56px; height: 56px; border-radius: 50%;
-      background: rgba(255,255,255,0.10);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.10) !important;
+      backdrop-filter: blur(8px) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.45rem; margin-bottom: 8px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.18);
@@ -99,7 +103,7 @@
 
     .quote {
       position: absolute; bottom: 32px; max-width: 600px;
-      font-size: 1rem; font-style: italic; opacity: 0.85; padding: 0 16px;
+      font-size: 1rem; font-weight: 500; font-style: italic; opacity: 0.85; padding: 0 16px;
       transition: font-size 0.3s;
     }
 
@@ -122,6 +126,7 @@
       border-right: 1px solid rgba(255,255,255,0.1);
       z-index: 200; padding: 20px 16px 50px; overflow-y: auto;
       color: #e2e8f0; transition: left 0.3s ease;
+      font-weight: 500;
     }
     #sidebar.open { left: 0; }
     #sidebar-overlay {
@@ -131,33 +136,33 @@
     #sidebar-overlay.show { opacity: 1; visibility: visible; }
 
     .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-    .sidebar-header h2 { font-size: 1.2rem; }
+    .sidebar-header h2 { font-size: 1.2rem; font-weight: 600; }
     #close-btn { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
 
     .group { margin-bottom: 15px; }
-    .group label { display: block; font-size: 0.72rem; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; }
+    .group label { display: block; font-size: 0.72rem; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; font-weight: 500; }
     .group select, .group input[type=text], .group input[type=color] {
       width: 100%; padding: 8px 10px; border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06);
-      color: white; font-size: 0.9rem;
+      color: white; font-size: 0.9rem; font-weight: 500;
     }
     .group input[type=range] { width: 100%; }
     .check { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
-    .check label { text-transform: none; color: #e2e8f0; font-size: 0.9rem; margin: 0; }
+    .check label { text-transform: none; color: #e2e8f0; font-size: 0.9rem; margin: 0; font-weight: 500; }
 
     .link-edit { display: flex; gap: 5px; margin-bottom: 6px; }
-    .link-edit input { flex: 1; }
+    .link-edit input { flex: 1; font-weight: 500; }
     .link-edit button { width: 28px; background: rgba(239,68,68,0.25); border: none; color: #fca5a5; border-radius: 6px; cursor: pointer; }
-    #add-link { width: 100%; padding: 8px; margin-top: 6px; background: rgba(59,130,246,0.18); border: 1px dashed #60a5fa; color: #93c5fd; border-radius: 8px; cursor: pointer; }
+    #add-link { width: 100%; padding: 8px; margin-top: 6px; background: rgba(59,130,246,0.18); border: 1px dashed #60a5fa; color: #93c5fd; border-radius: 8px; cursor: pointer; font-weight: 500; }
 
     .btns { display: flex; gap: 8px; margin-top: 20px; }
-    .btns button { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; }
+    .btns button { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
     .save { background: #3b82f6; color: white; }
     .reset { background: rgba(255,255,255,0.1); color: #e2e8f0; }
 
     body.dark-text { color: #0f172a; }
     body.dark-text .search-box input { background: rgba(0,0,0,0.08); color: #0f172a; }
-    body.dark-text .link-icon { background: rgba(0,0,0,0.07); }
+    body.dark-text .link-icon { background: rgba(0,0,0,0.07) !important; }
   </style>
 </head>
 <body>
@@ -315,7 +320,7 @@
     <div class="time" id="time">00:00</div>
 
     <div class="date-row" id="dateRow">
-      <div class="weekday" id="weekday">Wednesday</div>
+      <div class="weekday" id="weekday">WEDNESDAY</div>
       <div class="dates-right">
         <div id="engDate">9 September, 2026</div>
         <div id="nepDate">२४ भदौ, २०८३</div>
@@ -570,15 +575,16 @@
 
     function updateDates() {
       const now = new Date();
-      const weekdayEn = now.toLocaleDateString("en-US", { weekday: "long" });
+      const weekdayEn = now.toLocaleDateString("en-US", { weekday: "long" }).toUpperCase();
       const weekdayNe = nepaliWeekdays[now.getDay()];
 
       $("weekday").textContent = s.lang === "ne" ? weekdayNe : weekdayEn;
 
-      // "9 September, 2026"
-      $("engDate").textContent = now.toLocaleDateString("en-US", {
-        day: "numeric", month: "long", year: "numeric"
-      }).replace(/(\d+) (\w+) (\d+)/, "$1 $2, $3");
+      // Force "9 September, 2026"
+      const day = now.getDate();
+      const month = now.toLocaleDateString("en-US", { month: "long" });
+      const year = now.getFullYear();
+      $("engDate").textContent = `${day} ${month}, ${year}`;
 
       $("nepDate").textContent = adToBs(now.getFullYear(), now.getMonth()+1, now.getDate());
     }
@@ -598,16 +604,11 @@
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 2500);
         const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C", {
-          signal: controller.signal,
-          mode: "cors"
+          signal: controller.signal
         });
         clearTimeout(timeout);
-        if (res.ok) {
-          const txt = (await res.text()).trim();
-          $("weather").textContent = txt || "";
-        } else {
-          $("weather").textContent = "";
-        }
+        if (res.ok) $("weather").textContent = (await res.text()).trim() || "";
+        else $("weather").textContent = "";
       } catch (e) {
         $("weather").textContent = "";
       }
