@@ -97,6 +97,12 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 1.45rem; margin-bottom: 8px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+      overflow: hidden;
+    }
+    .link-icon img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
     }
 
     .quote {
@@ -105,7 +111,6 @@
       transition: font-size 0.3s;
     }
 
-    /* Prev / Next buttons */
     .nav-btns {
       position: fixed;
       bottom: 22px;
@@ -126,9 +131,7 @@
       display: flex; align-items: center; justify-content: center;
       transition: 0.2s;
     }
-    .nav-btns button:hover {
-      background: rgba(255,255,255,0.22);
-    }
+    .nav-btns button:hover { background: rgba(255,255,255,0.22); }
 
     #settings-btn {
       position: fixed; top: 18px; left: 18px; width: 44px; height: 44px;
@@ -235,9 +238,9 @@
     </div>
 
     <div class="group" id="unsplashGroup" style="display:none">
-      <label>Unsplash Collection ID (optional)</label>
+      <label>Unsplash Collection ID</label>
       <input type="text" id="collectionId" placeholder="e.g. 1053828">
-      <label style="margin-top:10px">Unsplash Access Key (optional)</label>
+      <label style="margin-top:10px">Unsplash Access Key</label>
       <input type="text" id="accessKey" placeholder="Paste your free Access Key here">
       <label style="margin-top:10px">Or paste Image URLs (one per line)</label>
       <textarea id="unsplashList" placeholder="https://images.unsplash.com/photo-xxxx?w=1920&q=90"></textarea>
@@ -476,6 +479,14 @@
     let currentImages = [];
     const $ = id => document.getElementById(id);
 
+    function getDomain(url) {
+      try {
+        return new URL(url).hostname.replace("www.", "");
+      } catch {
+        return "";
+      }
+    }
+
     function getUnsplashImages() {
       const list = (s.unsplashList || "").split("\n").map(u => u.trim()).filter(u => u.startsWith("http"));
       return list.length > 0 ? list : defaultUnsplash;
@@ -697,8 +708,34 @@
       $("links").innerHTML = "";
       s.links.forEach(l => {
         const a = document.createElement("a");
-        a.href = l.url; a.target = "_blank"; a.className = "link";
-        a.innerHTML = `<div class="link-icon">${l.icon||"🔗"}</div><span>${l.name}</span>`;
+        a.href = l.url;
+        a.target = "_blank";
+        a.className = "link";
+
+        const domain = getDomain(l.url);
+        const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=64` : "";
+
+        const iconDiv = document.createElement("div");
+        iconDiv.className = "link-icon";
+
+        if (faviconUrl) {
+          const img = document.createElement("img");
+          img.src = faviconUrl;
+          img.alt = "";
+          img.onerror = () => {
+            iconDiv.textContent = l.icon || "🔗";
+          };
+          iconDiv.appendChild(img);
+        } else {
+          iconDiv.textContent = l.icon || "🔗";
+        }
+
+        a.appendChild(iconDiv);
+
+        const span = document.createElement("span");
+        span.textContent = l.name;
+        a.appendChild(span);
+
         $("links").appendChild(a);
       });
     }
@@ -709,7 +746,10 @@
       s.links.forEach((l, i) => {
         const d = document.createElement("div");
         d.className = "link-edit";
-        d.innerHTML = `<input value="${l.icon}" style="width:42px"><input value="${l.name}"><input value="${l.url}"><button data-i="${i}">×</button>`;
+        d.innerHTML = `<input value="${l.icon}" style="width:42px" placeholder="emoji">
+                       <input value="${l.name}" placeholder="Name">
+                       <input value="${l.url}" placeholder="URL">
+                       <button data-i="${i}">×</button>`;
         box.appendChild(d);
       });
       box.querySelectorAll("button").forEach(b => {
