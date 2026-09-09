@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>New Tab</title>
+
+  <!-- Favicon (simple modern icon) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f172a'/><text y='.9em' font-size='70' x='50%' text-anchor='middle' fill='white'>⌘</text></svg>">
+
   <style>
     * {
       margin: 0;
@@ -20,64 +24,65 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: white;
       text-align: center;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      background-size: cover;
-      background-position: center;
       overflow: hidden;
       position: relative;
+      transition: background 0.4s ease;
     }
 
-    /* Optional beautiful background image (Unsplash) */
-    body::before {
-      content: "";
+    /* Background layers */
+    #bg-image {
       position: absolute;
       inset: 0;
-      background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center/cover no-repeat;
-      opacity: 0.45;
-      z-index: -1;
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      transition: opacity 0.5s ease;
     }
 
-    .overlay {
+    #overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.4);
       z-index: -1;
+      transition: background 0.3s ease;
     }
 
+    /* ===== Main Content ===== */
     .time {
       font-size: 7rem;
       font-weight: 300;
       letter-spacing: -2px;
-      margin-bottom: 0.2rem;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      margin-bottom: 0.15rem;
+      text-shadow: 0 4px 25px rgba(0,0,0,0.45);
+      transition: font-size 0.3s ease;
     }
 
     .date {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 400;
-      opacity: 0.9;
-      margin-bottom: 2.5rem;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      opacity: 0.92;
+      margin-bottom: 2.8rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.35);
     }
 
     .search-box {
       width: 90%;
-      max-width: 580px;
+      max-width: 560px;
       position: relative;
       margin-bottom: 3rem;
     }
 
     .search-box input {
       width: 100%;
-      padding: 16px 50px 16px 24px;
+      padding: 16px 52px 16px 24px;
       font-size: 1.15rem;
       border: none;
       border-radius: 50px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(14px);
       color: white;
       outline: none;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
       transition: all 0.3s ease;
     }
 
@@ -86,30 +91,29 @@
     }
 
     .search-box input:focus {
-      background: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+      background: rgba(255, 255, 255, 0.22);
     }
 
     .search-box button {
       position: absolute;
-      right: 8px;
+      right: 10px;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
       color: white;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       cursor: pointer;
-      opacity: 0.8;
-      padding: 8px;
+      opacity: 0.85;
+      padding: 6px;
     }
 
     .links {
       display: flex;
-      gap: 1.8rem;
+      gap: 1.6rem;
       flex-wrap: wrap;
       justify-content: center;
-      max-width: 700px;
+      max-width: 720px;
     }
 
     .link {
@@ -120,71 +124,326 @@
       color: white;
       opacity: 0.9;
       transition: all 0.25s ease;
-      width: 80px;
+      width: 78px;
     }
 
     .link:hover {
       opacity: 1;
-      transform: translateY(-4px);
+      transform: translateY(-5px);
     }
 
     .link-icon {
-      width: 56px;
-      height: 56px;
+      width: 54px;
+      height: 54px;
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
       border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       margin-bottom: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.18);
     }
 
     .link span {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 500;
     }
 
     .quote {
       position: absolute;
-      bottom: 40px;
-      max-width: 600px;
+      bottom: 38px;
+      max-width: 620px;
       font-size: 1.05rem;
       font-style: italic;
-      opacity: 0.85;
+      opacity: 0.88;
       padding: 0 20px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+      transition: opacity 0.3s ease;
+    }
+
+    /* ===== Settings Button ===== */
+    #settings-btn {
+      position: fixed;
+      top: 22px;
+      left: 22px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      font-size: 1.35rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      transition: all 0.25s ease;
+    }
+
+    #settings-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: scale(1.05);
+    }
+
+    /* ===== Sidebar ===== */
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -340px;
+      width: 320px;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      z-index: 200;
+      transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      padding: 24px 20px 40px;
+      color: #e2e8f0;
+    }
+
+    #sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-header h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    #close-sidebar {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    #close-sidebar:hover {
+      color: white;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .setting-group {
+      margin-bottom: 26px;
+    }
+
+    .setting-group label {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .setting-group select,
+    .setting-group input[type="text"],
+    .setting-group input[type="color"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .setting-group select:focus,
+    .setting-group input:focus {
+      border-color: #60a5fa;
+    }
+
+    .setting-group input[type="range"] {
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: #60a5fa;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 11px;
+      border-radius: 10px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.18);
+    }
+
+    /* Overlay when sidebar is open */
+    #sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 150;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    #sidebar-overlay.visible {
+      opacity: 1;
+      visibility: visible;
     }
 
     @media (max-width: 600px) {
-      .time {
-        font-size: 4.5rem;
-      }
-      .date {
-        font-size: 1.2rem;
-      }
-      .links {
-        gap: 1.2rem;
-      }
+      .time { font-size: 4.2rem; }
+      .date { font-size: 1.15rem; }
+      #sidebar { width: 290px; left: -300px; }
     }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
+  <div id="bg-image"></div>
+  <div id="overlay"></div>
 
+  <!-- Settings Button -->
+  <button id="settings-btn" title="Settings">⚙️</button>
+
+  <!-- Sidebar Overlay -->
+  <div id="sidebar-overlay"></div>
+
+  <!-- Settings Sidebar -->
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <h2>Settings</h2>
+      <button id="close-sidebar">×</button>
+    </div>
+
+    <div class="setting-group">
+      <label>Background Type</label>
+      <select id="bg-type">
+        <option value="gradient">Gradient</option>
+        <option value="image">Image URL</option>
+        <option value="solid">Solid Color</option>
+      </select>
+    </div>
+
+    <div class="setting-group" id="image-url-group" style="display:none;">
+      <label>Image URL</label>
+      <input type="text" id="image-url" placeholder="https://images.unsplash.com/...">
+    </div>
+
+    <div class="setting-group" id="solid-color-group" style="display:none;">
+      <label>Solid Color</label>
+      <input type="color" id="solid-color" value="#0f172a">
+    </div>
+
+    <div class="setting-group">
+      <label>Overlay Darkness</label>
+      <input type="range" id="overlay-opacity" min="0" max="80" value="40">
+    </div>
+
+    <div class="setting-group">
+      <label>Clock Format</label>
+      <select id="clock-format">
+        <option value="24">24-hour</option>
+        <option value="12">12-hour</option>
+      </select>
+    </div>
+
+    <div class="setting-group">
+      <div class="checkbox-row">
+        <input type="checkbox" id="show-seconds">
+        <label for="show-seconds" style="text-transform:none; letter-spacing:0; margin:0;">Show seconds</label>
+      </div>
+    </div>
+
+    <div class="setting-group">
+      <label>Search Engine</label>
+      <select id="search-engine">
+        <option value="google">Google</option>
+        <option value="duckduckgo">DuckDuckGo</option>
+        <option value="bing">Bing</option>
+      </select>
+    </div>
+
+    <div class="setting-group">
+      <div class="checkbox-row">
+        <input type="checkbox" id="show-quote" checked>
+        <label for="show-quote" style="text-transform:none; letter-spacing:0; margin:0;">Show Quote</label>
+      </div>
+    </div>
+
+    <div class="setting-group">
+      <div class="checkbox-row">
+        <input type="checkbox" id="show-links" checked>
+        <label for="show-links" style="text-transform:none; letter-spacing:0; margin:0;">Show Quick Links</label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" id="reset-btn">Reset</button>
+      <button class="btn btn-primary" id="save-btn">Done</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
   <div class="time" id="time">00:00</div>
   <div class="date" id="date">Loading...</div>
 
   <div class="search-box">
     <form id="searchForm" action="https://www.google.com/search" method="get" target="_blank">
-      <input type="text" name="q" placeholder="Search the web..." autocomplete="off" autofocus />
+      <input type="text" name="q" id="search-input" placeholder="Search the web..." autocomplete="off" autofocus />
       <button type="submit">🔍</button>
     </form>
   </div>
 
-  <div class="links">
+  <div class="links" id="links">
     <a href="https://mail.google.com" class="link" target="_blank">
       <div class="link-icon">📧</div>
       <span>Gmail</span>
@@ -216,32 +475,152 @@
   </div>
 
   <script>
-    function updateClock() {
-      const now = new Date();
-      
-      // Time
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      
-      // 24-hour format (change to 12-hour if you prefer)
-      hours = hours.toString().padStart(2, '0');
-      minutes = minutes.toString().padStart(2, '0');
-      
-      document.getElementById('time').textContent = `${hours}:${minutes}`;
+    // ===== Default Settings =====
+    const defaults = {
+      bgType: 'gradient',
+      imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80',
+      solidColor: '#0f172a',
+      overlayOpacity: 40,
+      clockFormat: '24',
+      showSeconds: false,
+      searchEngine: 'google',
+      showQuote: true,
+      showLinks: true
+    };
 
-      // Date
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
+    // ===== Load Settings =====
+    let settings = JSON.parse(localStorage.getItem('newtab-settings')) || { ...defaults };
+
+    // ===== DOM Elements =====
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const settingsBtn = document.getElementById('settings-btn');
+    const closeSidebar = document.getElementById('close-sidebar');
+    const bgImage = document.getElementById('bg-image');
+    const overlay = document.getElementById('overlay');
+    const timeEl = document.getElementById('time');
+    const dateEl = document.getElementById('date');
+    const quoteEl = document.getElementById('quote');
+    const linksEl = document.getElementById('links');
+    const searchForm = document.getElementById('searchForm');
+
+    // ===== Apply Settings =====
+    function applySettings() {
+      // Background
+      if (settings.bgType === 'image') {
+        bgImage.style.backgroundImage = `url('${settings.imageUrl}')`;
+        bgImage.style.opacity = '1';
+        document.body.style.background = 'transparent';
+      } else if (settings.bgType === 'solid') {
+        bgImage.style.opacity = '0';
+        document.body.style.background = settings.solidColor;
+      } else {
+        bgImage.style.opacity = '0';
+        document.body.style.background = 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)';
+      }
+
+      // Overlay
+      overlay.style.background = `rgba(0, 0, 0, ${settings.overlayOpacity / 100})`;
+
+      // Quote & Links visibility
+      quoteEl.style.display = settings.showQuote ? 'block' : 'none';
+      linksEl.style.display = settings.showLinks ? 'flex' : 'none';
+
+      // Search engine
+      const engines = {
+        google: 'https://www.google.com/search',
+        duckduckgo: 'https://duckduckgo.com/',
+        bing: 'https://www.bing.com/search'
+      };
+      searchForm.action = engines[settings.searchEngine];
+
+      // Update form inputs
+      document.getElementById('bg-type').value = settings.bgType;
+      document.getElementById('image-url').value = settings.imageUrl;
+      document.getElementById('solid-color').value = settings.solidColor;
+      document.getElementById('overlay-opacity').value = settings.overlayOpacity;
+      document.getElementById('clock-format').value = settings.clockFormat;
+      document.getElementById('show-seconds').checked = settings.showSeconds;
+      document.getElementById('search-engine').value = settings.searchEngine;
+      document.getElementById('show-quote').checked = settings.showQuote;
+      document.getElementById('show-links').checked = settings.showLinks;
+
+      toggleBgInputs();
     }
 
-    // Update every second
+    function toggleBgInputs() {
+      const type = document.getElementById('bg-type').value;
+      document.getElementById('image-url-group').style.display = type === 'image' ? 'block' : 'none';
+      document.getElementById('solid-color-group').style.display = type === 'solid' ? 'block' : 'none';
+    }
+
+    // ===== Clock =====
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+
+      if (settings.clockFormat === '12') {
+        const ampm = hours >= 12 ? ' PM' : ' AM';
+        hours = hours % 12 || 12;
+        timeEl.textContent = `${hours}:${minutes.toString().padStart(2, '0')}${settings.showSeconds ? ':' + seconds.toString().padStart(2, '0') : ''}${ampm}`;
+      } else {
+        timeEl.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}${settings.showSeconds ? ':' + seconds.toString().padStart(2, '0') : ''}`;
+      }
+
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      dateEl.textContent = now.toLocaleDateString('en-US', options);
+    }
+
+    // ===== Sidebar Controls =====
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebarOverlay.classList.add('visible');
+    }
+
+    function closeSidebarFn() {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('visible');
+    }
+
+    settingsBtn.addEventListener('click', openSidebar);
+    closeSidebar.addEventListener('click', closeSidebarFn);
+    sidebarOverlay.addEventListener('click', closeSidebarFn);
+
+    document.getElementById('bg-type').addEventListener('change', toggleBgInputs);
+
+    document.getElementById('save-btn').addEventListener('click', () => {
+      settings.bgType = document.getElementById('bg-type').value;
+      settings.imageUrl = document.getElementById('image-url').value;
+      settings.solidColor = document.getElementById('solid-color').value;
+      settings.overlayOpacity = document.getElementById('overlay-opacity').value;
+      settings.clockFormat = document.getElementById('clock-format').value;
+      settings.showSeconds = document.getElementById('show-seconds').checked;
+      settings.searchEngine = document.getElementById('search-engine').value;
+      settings.showQuote = document.getElementById('show-quote').checked;
+      settings.showLinks = document.getElementById('show-links').checked;
+
+      localStorage.setItem('newtab-settings', JSON.stringify(settings));
+      applySettings();
+      closeSidebarFn();
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      settings = { ...defaults };
+      localStorage.setItem('newtab-settings', JSON.stringify(settings));
+      applySettings();
+    });
+
+    // ===== Init =====
+    applySettings();
     updateClock();
     setInterval(updateClock, 1000);
 
-    // Optional: change search engine
-    // To use DuckDuckGo instead of Google, change the form action to:
-    // action="https://duckduckgo.com/"
+    // Close sidebar with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSidebarFn();
+    });
   </script>
 </body>
 </html>
