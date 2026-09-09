@@ -14,7 +14,7 @@
       justify-content: center;
       align-items: center;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      font-weight: 500;
+      font-weight: 600;
       color: white;
       text-align: center;
       overflow: hidden;
@@ -33,8 +33,8 @@
     }
     #main { display: flex; flex-direction: column; align-items: center; }
 
-    .greeting { font-size: 1.3rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.6rem; transition: font-size 0.3s; }
-    .time { font-size: 6.5rem; font-weight: 400; letter-spacing: -2px; margin-bottom: 0.4rem; transition: font-size 0.3s; }
+    .greeting { font-size: 1.3rem; font-weight: 600; opacity: 0.9; margin-bottom: 0.6rem; transition: font-size 0.3s; }
+    .time { font-size: 6.5rem; font-weight: 500; letter-spacing: -2px; margin-bottom: 0.4rem; transition: font-size 0.3s; }
 
     .date-row {
       display: flex;
@@ -58,20 +58,19 @@
       line-height: 1.35;
       opacity: 0.82;
       font-size: 0.95rem;
-      font-weight: 500;
+      font-weight: 600;
       text-align: left;
     }
 
-    .weather { font-size: 1.1rem; font-weight: 500; opacity: 0.85; margin-bottom: 2rem; min-height: 1.4em; }
+    .weather { font-size: 1.1rem; font-weight: 600; opacity: 0.85; margin-bottom: 2rem; min-height: 1.4em; }
 
     .search-box { width: 90%; max-width: 520px; position: relative; margin-bottom: 2.5rem; }
     .search-box input {
       width: 100%; padding: 15px 50px 15px 22px;
-      font-size: 1.1rem; font-weight: 500;
+      font-size: 1.1rem; font-weight: 600;
       border: 1px solid rgba(255,255,255,0.15);
       border-radius: 50px;
       background: rgba(255,255,255,0.09);
-      backdrop-filter: blur(10px);
       color: inherit; outline: none;
       box-shadow: 0 6px 24px rgba(0,0,0,0.2);
     }
@@ -85,17 +84,16 @@
     .link {
       display: flex; flex-direction: column; align-items: center;
       text-decoration: none; color: inherit; width: 74px; opacity: 0.92;
-      font-weight: 500;
+      font-weight: 600;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
     .link:hover { opacity: 1; transform: translateY(-4px); }
 
-    /* Fixed liquid glass - absolutely no hover style change */
+    /* ZERO blur - no backdrop-filter at all */
     .link-icon {
       width: 56px; height: 56px; border-radius: 50%;
-      background: rgba(255,255,255,0.10) !important;
-      backdrop-filter: blur(8px) !important;
-      border: 1px solid rgba(255,255,255,0.15) !important;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
       display: flex; align-items: center; justify-content: center;
       font-size: 1.45rem; margin-bottom: 8px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.18);
@@ -103,7 +101,7 @@
 
     .quote {
       position: absolute; bottom: 32px; max-width: 600px;
-      font-size: 1rem; font-weight: 500; font-style: italic; opacity: 0.85; padding: 0 16px;
+      font-size: 1rem; font-weight: 600; font-style: italic; opacity: 0.85; padding: 0 16px;
       transition: font-size 0.3s;
     }
 
@@ -111,7 +109,6 @@
       position: fixed; top: 18px; left: 18px; width: 44px; height: 44px;
       border-radius: 14px;
       background: rgba(255,255,255,0.09);
-      backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.15);
       color: inherit; cursor: pointer; z-index: 100;
       display: flex; align-items: center; justify-content: center;
@@ -120,13 +117,12 @@
     #settings-btn svg { width: 22px; height: 22px; }
 
     #sidebar {
-      position: fixed; top: 0; left: -350px; width: 330px; height: 100%;
-      background: rgba(15,23,42,0.90);
-      backdrop-filter: blur(14px);
+      position: fixed; top: 0; left: -360px; width: 340px; height: 100%;
+      background: rgba(15,23,42,0.92);
       border-right: 1px solid rgba(255,255,255,0.1);
       z-index: 200; padding: 20px 16px 50px; overflow-y: auto;
       color: #e2e8f0; transition: left 0.3s ease;
-      font-weight: 500;
+      font-weight: 600;
     }
     #sidebar.open { left: 0; }
     #sidebar-overlay {
@@ -140,20 +136,21 @@
     #close-btn { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
 
     .group { margin-bottom: 15px; }
-    .group label { display: block; font-size: 0.72rem; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; font-weight: 500; }
-    .group select, .group input[type=text], .group input[type=color] {
+    .group label { display: block; font-size: 0.72rem; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; font-weight: 600; }
+    .group select, .group input[type=text], .group input[type=color], .group textarea {
       width: 100%; padding: 8px 10px; border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06);
-      color: white; font-size: 0.9rem; font-weight: 500;
+      color: white; font-size: 0.9rem; font-weight: 600;
     }
+    .group textarea { min-height: 90px; resize: vertical; font-size: 0.82rem; }
     .group input[type=range] { width: 100%; }
     .check { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
-    .check label { text-transform: none; color: #e2e8f0; font-size: 0.9rem; margin: 0; font-weight: 500; }
+    .check label { text-transform: none; color: #e2e8f0; font-size: 0.9rem; margin: 0; font-weight: 600; }
 
     .link-edit { display: flex; gap: 5px; margin-bottom: 6px; }
-    .link-edit input { flex: 1; font-weight: 500; }
+    .link-edit input { flex: 1; font-weight: 600; }
     .link-edit button { width: 28px; background: rgba(239,68,68,0.25); border: none; color: #fca5a5; border-radius: 6px; cursor: pointer; }
-    #add-link { width: 100%; padding: 8px; margin-top: 6px; background: rgba(59,130,246,0.18); border: 1px dashed #60a5fa; color: #93c5fd; border-radius: 8px; cursor: pointer; font-weight: 500; }
+    #add-link { width: 100%; padding: 8px; margin-top: 6px; background: rgba(59,130,246,0.18); border: 1px dashed #60a5fa; color: #93c5fd; border-radius: 8px; cursor: pointer; font-weight: 600; }
 
     .btns { display: flex; gap: 8px; margin-top: 20px; }
     .btns button { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
@@ -162,7 +159,7 @@
 
     body.dark-text { color: #0f172a; }
     body.dark-text .search-box input { background: rgba(0,0,0,0.08); color: #0f172a; }
-    body.dark-text .link-icon { background: rgba(0,0,0,0.07) !important; }
+    body.dark-text .link-icon { background: rgba(0,0,0,0.08); }
   </style>
 </head>
 <body>
@@ -196,21 +193,23 @@
       <label id="labelBg">Background</label>
       <select id="bgType">
         <option value="gradient">Gradient</option>
-        <option value="image">Image URL</option>
+        <option value="image">Single Image URL</option>
         <option value="solid">Solid Color</option>
-        <option value="unsplash">Unsplash Auto</option>
+        <option value="unsplash">Unsplash Auto (your list)</option>
       </select>
     </div>
     <div class="group" id="imgGroup" style="display:none">
       <label>Image URL</label>
-      <input type="text" id="imgUrl">
+      <input type="text" id="imgUrl" placeholder="https://images.unsplash.com/...">
     </div>
     <div class="group" id="colorGroup" style="display:none">
       <label>Color</label>
       <input type="color" id="solidColor" value="#0f172a">
     </div>
     <div class="group" id="unsplashGroup" style="display:none">
-      <label id="labelInterval">Change Interval</label>
+      <label>Your Unsplash Image URLs (one per line)</label>
+      <textarea id="unsplashList" placeholder="Paste full Unsplash image links here, one per line&#10;Example:&#10;https://images.unsplash.com/photo-xxxx?w=1920&q=90"></textarea>
+      <label style="margin-top:10px" id="labelInterval">Change Interval</label>
       <select id="unsplashInterval">
         <option value="1">Every 1 hour</option>
         <option value="3">Every 3 hours</option>
@@ -390,15 +389,16 @@
       {t:"Be content with what you have; rejoice in the way things are.", a:"Lao Tzu"}
     ];
 
-    const unsplashImages = [
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
-      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80",
-      "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1920&q=80",
-      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=80",
-      "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1920&q=80",
-      "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=80",
-      "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920&q=80",
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80"
+    // Default high-res Unsplash images
+    const defaultUnsplash = [
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90",
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=90",
+      "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1920&q=90",
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=90",
+      "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1920&q=90",
+      "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=90",
+      "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920&q=90",
+      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=90"
     ];
 
     const nepaliMonths = ["बैशाख","जेठ","असार","साउन","भदौ","असोज","कार्तिक","मंसिर","पुस","माघ","फागुन","चैत"];
@@ -414,12 +414,13 @@
     }
 
     const defaults = {
-      lang: "en", bgType: "gradient", imgUrl: unsplashImages[0], solidColor: "#0f172a",
+      lang: "en", bgType: "gradient", imgUrl: defaultUnsplash[0], solidColor: "#0f172a",
       overlay: 40, autoDim: true, clockFormat: "24", showSec: false, textMode: "light",
       userName: "", showNepaliDate: true, city: "Kathmandu", showWeather: false,
       engine: "google", showSearch: true, showQuote: true, showLinks: true,
       scaleGreeting: 100, scaleTime: 100, scaleDate: 100, scaleQuote: 100, scaleLinks: 100,
       unsplashInterval: 24, lastUnsplashChange: 0,
+      unsplashList: defaultUnsplash.join("\n"),
       links: [
         {name:"Gmail", url:"https://mail.google.com", icon:"📧"},
         {name:"YouTube", url:"https://youtube.com", icon:"▶️"},
@@ -433,6 +434,11 @@
     let s = JSON.parse(localStorage.getItem("ntp-safe")) || JSON.parse(JSON.stringify(defaults));
     let qIndex = 0;
     const $ = id => document.getElementById(id);
+
+    function getUnsplashImages() {
+      const list = (s.unsplashList || "").split("\n").map(u => u.trim()).filter(u => u.startsWith("http"));
+      return list.length > 0 ? list : defaultUnsplash;
+    }
 
     function applyLanguage() {
       const t = translations[s.lang] || translations.en;
@@ -529,6 +535,7 @@
       $("scaleQuote").value = s.scaleQuote;
       $("scaleLinks").value = s.scaleLinks;
       $("unsplashInterval").value = s.unsplashInterval;
+      $("unsplashList").value = s.unsplashList || defaultUnsplash.join("\n");
 
       toggleBg();
       renderLinks();
@@ -549,10 +556,11 @@
     }
 
     function checkUnsplashRotation() {
+      const images = getUnsplashImages();
       const now = Date.now();
       const intervalMs = s.unsplashInterval * 60 * 60 * 1000;
       if (!s.lastUnsplashChange || (now - s.lastUnsplashChange) > intervalMs) {
-        s.imgUrl = unsplashImages[Math.floor(Math.random() * unsplashImages.length)];
+        s.imgUrl = images[Math.floor(Math.random() * images.length)];
         s.lastUnsplashChange = now;
         localStorage.setItem("ntp-safe", JSON.stringify(s));
       }
@@ -580,7 +588,6 @@
 
       $("weekday").textContent = s.lang === "ne" ? weekdayNe : weekdayEn;
 
-      // Force "9 September, 2026"
       const day = now.getDate();
       const month = now.toLocaleDateString("en-US", { month: "long" });
       const year = now.getFullYear();
@@ -603,9 +610,7 @@
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 2500);
-        const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C", {
-          signal: controller.signal
-        });
+        const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C", { signal: controller.signal });
         clearTimeout(timeout);
         if (res.ok) $("weather").textContent = (await res.text()).trim() || "";
         else $("weather").textContent = "";
@@ -704,6 +709,7 @@
       s.scaleQuote = +$("scaleQuote").value;
       s.scaleLinks = +$("scaleLinks").value;
       s.unsplashInterval = +$("unsplashInterval").value;
+      s.unsplashList = $("unsplashList").value;
 
       localStorage.setItem("ntp-safe", JSON.stringify(s));
       apply();
