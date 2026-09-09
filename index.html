@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>New Tab</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f172a'/><text y='.9em' font-size='70' x='50%' text-anchor='middle' fill='white'>⌘</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230f172a'/><text y='70' font-size='55' x='50' text-anchor='middle' fill='white'>N</text></svg>">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -13,357 +13,210 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: white;
       text-align: center;
       overflow: hidden;
       position: relative;
-      transition: background 0.5s ease, color 0.3s ease;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      transition: color 0.3s ease;
     }
-    #bg-image {
+    #bg {
       position: absolute; inset: 0;
       background-size: cover; background-position: center;
-      z-index: -2; transition: opacity 0.6s ease;
+      z-index: -2; opacity: 0; transition: opacity 0.5s;
     }
     #overlay {
       position: absolute; inset: 0;
       background: rgba(0,0,0,0.4);
-      z-index: -1; transition: background 0.4s ease;
+      z-index: -1; transition: background 0.4s;
     }
-    .greeting {
-      font-size: 1.35rem;
-      font-weight: 400;
-      opacity: 0.9;
-      margin-bottom: 0.6rem;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.35);
-    }
-    .time {
-      font-size: 6.8rem;
-      font-weight: 300;
-      letter-spacing: -2px;
-      margin-bottom: 0.15rem;
-      text-shadow: 0 4px 25px rgba(0,0,0,0.45);
-      transition: font-size 0.3s ease;
-    }
-    .date {
-      font-size: 1.4rem;
-      opacity: 0.9;
-      margin-bottom: 1.8rem;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.35);
-    }
-    .weather {
-      font-size: 1.1rem;
-      opacity: 0.85;
-      margin-bottom: 2.2rem;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-    .search-box {
-      width: 90%; max-width: 560px;
-      position: relative; margin-bottom: 2.8rem;
-    }
+    .greeting { font-size: 1.3rem; opacity: 0.9; margin-bottom: 0.5rem; }
+    .time { font-size: 6.5rem; font-weight: 300; letter-spacing: -2px; margin-bottom: 0.2rem; }
+    .date { font-size: 1.3rem; opacity: 0.9; margin-bottom: 1.5rem; }
+    .weather { font-size: 1.1rem; opacity: 0.85; margin-bottom: 2rem; }
+    .search-box { width: 90%; max-width: 520px; position: relative; margin-bottom: 2.5rem; }
     .search-box input {
-      width: 100%;
-      padding: 15px 50px 15px 22px;
-      font-size: 1.12rem;
-      border: none; border-radius: 50px;
-      background: rgba(255,255,255,0.13);
-      backdrop-filter: blur(14px);
-      color: inherit;
-      outline: none;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.22);
-      transition: all 0.3s ease;
+      width: 100%; padding: 14px 48px 14px 20px;
+      font-size: 1.1rem; border: none; border-radius: 50px;
+      background: rgba(255,255,255,0.14); color: inherit;
+      outline: none; backdrop-filter: blur(12px);
     }
-    .search-box input::placeholder { color: rgba(255,255,255,0.65); }
-    .search-box input:focus { background: rgba(255,255,255,0.2); }
     .search-box button {
-      position: absolute; right: 10px; top: 50%;
-      transform: translateY(-50%);
-      background: none; border: none;
-      color: inherit; font-size: 1.3rem;
-      cursor: pointer; opacity: 0.85; padding: 6px;
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: inherit; font-size: 1.2rem; cursor: pointer;
     }
-    .links {
-      display: flex; gap: 1.5rem;
-      flex-wrap: wrap; justify-content: center;
-      max-width: 750px;
-    }
+    .links { display: flex; gap: 1.4rem; flex-wrap: wrap; justify-content: center; max-width: 700px; }
     .link {
-      display: flex; flex-direction: column;
-      align-items: center; text-decoration: none;
-      color: inherit; opacity: 0.9;
-      transition: all 0.25s ease; width: 76px;
+      display: flex; flex-direction: column; align-items: center;
+      text-decoration: none; color: inherit; width: 72px; opacity: 0.9;
+      transition: 0.2s;
     }
-    .link:hover { opacity: 1; transform: translateY(-5px); }
+    .link:hover { opacity: 1; transform: translateY(-4px); }
     .link-icon {
-      width: 52px; height: 52px;
-      background: rgba(255,255,255,0.14);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; margin-bottom: 7px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      width: 50px; height: 50px; border-radius: 14px;
+      background: rgba(255,255,255,0.15); display: flex;
+      align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 6px;
     }
-    .link span { font-size: 0.8rem; font-weight: 500; }
     .quote {
-      position: absolute; bottom: 36px;
-      max-width: 620px; font-size: 1.05rem;
-      font-style: italic; opacity: 0.88;
-      padding: 0 20px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
-      transition: opacity 0.4s ease;
+      position: absolute; bottom: 32px; max-width: 580px;
+      font-size: 1rem; font-style: italic; opacity: 0.85; padding: 0 16px;
     }
 
-    /* Settings button */
+    /* Settings */
     #settings-btn {
-      position: fixed; top: 20px; left: 20px;
-      width: 44px; height: 44px; border-radius: 12px;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: inherit; font-size: 1.35rem;
-      cursor: pointer; display: flex;
-      align-items: center; justify-content: center;
-      z-index: 100; transition: all 0.25s ease;
+      position: fixed; top: 18px; left: 18px; width: 42px; height: 42px;
+      border-radius: 11px; background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.15); color: inherit;
+      font-size: 1.3rem; cursor: pointer; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
     }
-    #settings-btn:hover {
-      background: rgba(255,255,255,0.22);
-      transform: scale(1.06);
-    }
-
-    /* Sidebar */
     #sidebar {
-      position: fixed; top: 0; left: -360px;
-      width: 340px; height: 100vh;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(22px);
-      border-right: 1px solid rgba(255,255,255,0.08);
-      z-index: 200; transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
-      overflow-y: auto; padding: 22px 18px 50px;
-      color: #e2e8f0; font-size: 0.95rem;
+      position: fixed; top: 0; left: -340px; width: 320px; height: 100%;
+      background: rgba(15,23,42,0.96); backdrop-filter: blur(16px);
+      z-index: 200; padding: 20px 16px 40px; overflow-y: auto;
+      color: #e2e8f0; transition: left 0.3s ease;
     }
     #sidebar.open { left: 0; }
-    .sidebar-header {
-      display: flex; justify-content: space-between;
-      align-items: center; margin-bottom: 24px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .sidebar-header h2 { font-size: 1.25rem; font-weight: 600; }
-    #close-sidebar {
-      background: none; border: none;
-      color: #94a3b8; font-size: 1.6rem;
-      cursor: pointer; padding: 2px 8px; border-radius: 8px;
-    }
-    #close-sidebar:hover { color: white; background: rgba(255,255,255,0.1); }
-
-    .setting-group { margin-bottom: 22px; }
-    .setting-group > label {
-      display: block; font-size: 0.75rem;
-      text-transform: uppercase; letter-spacing: 0.6px;
-      color: #94a3b8; margin-bottom: 7px; font-weight: 500;
-    }
-    .setting-group select,
-    .setting-group input[type="text"],
-    .setting-group input[type="color"],
-    .setting-group input[type="number"] {
-      width: 100%; padding: 9px 11px;
-      border-radius: 9px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: white; font-size: 0.92rem; outline: none;
-    }
-    .setting-group input[type="range"] { width: 100%; margin-top: 4px; }
-    .checkbox-row {
-      display: flex; align-items: center; gap: 9px; margin-top: 6px;
-    }
-    .checkbox-row input { width: 17px; height: 17px; accent-color: #60a5fa; }
-    .checkbox-row label { text-transform: none; letter-spacing: 0; margin: 0; font-size: 0.9rem; color: #e2e8f0; }
-
-    /* Quick Links editor */
-    .links-editor { margin-top: 8px; }
-    .link-item {
-      display: flex; gap: 6px; margin-bottom: 8px; align-items: center;
-    }
-    .link-item input { flex: 1; }
-    .link-item button {
-      background: rgba(239,68,68,0.2); border: none;
-      color: #fca5a5; width: 32px; height: 32px;
-      border-radius: 8px; cursor: pointer; font-size: 1rem;
-    }
-    .link-item button:hover { background: rgba(239,68,68,0.35); }
-    #add-link-btn {
-      width: 100%; padding: 9px; margin-top: 6px;
-      background: rgba(59,130,246,0.2); border: 1px dashed rgba(59,130,246,0.5);
-      color: #93c5fd; border-radius: 9px; cursor: pointer; font-size: 0.9rem;
-    }
-    #add-link-btn:hover { background: rgba(59,130,246,0.3); }
-
-    .btn-row { display: flex; gap: 10px; margin-top: 28px; }
-    .btn {
-      flex: 1; padding: 11px; border-radius: 10px;
-      border: none; font-size: 0.9rem; font-weight: 500; cursor: pointer;
-    }
-    .btn-primary { background: #3b82f6; color: white; }
-    .btn-primary:hover { background: #2563eb; }
-    .btn-secondary { background: rgba(255,255,255,0.1); color: #e2e8f0; }
-    .btn-secondary:hover { background: rgba(255,255,255,0.18); }
-
     #sidebar-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 150; opacity: 0; visibility: hidden;
-      transition: all 0.3s ease;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 150; opacity: 0; visibility: hidden; transition: 0.3s;
     }
-    #sidebar-overlay.visible { opacity: 1; visibility: visible; }
+    #sidebar-overlay.show { opacity: 1; visibility: visible; }
+    .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .sidebar-header h2 { font-size: 1.2rem; }
+    #close-btn { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
+    .group { margin-bottom: 18px; }
+    .group label { display: block; font-size: 0.75rem; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; }
+    .group select, .group input[type=text], .group input[type=color] {
+      width: 100%; padding: 8px 10px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06);
+      color: white; font-size: 0.9rem;
+    }
+    .group input[type=range] { width: 100%; }
+    .check { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+    .check label { text-transform: none; color: #e2e8f0; font-size: 0.9rem; margin: 0; }
+    .link-edit { display: flex; gap: 5px; margin-bottom: 6px; }
+    .link-edit input { flex: 1; }
+    .link-edit button { width: 30px; background: rgba(239,68,68,0.25); border: none; color: #fca5a5; border-radius: 6px; cursor: pointer; }
+    #add-link { width: 100%; padding: 8px; margin-top: 6px; background: rgba(59,130,246,0.2); border: 1px dashed #60a5fa; color: #93c5fd; border-radius: 8px; cursor: pointer; }
+    .btns { display: flex; gap: 8px; margin-top: 24px; }
+    .btns button { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; }
+    .save { background: #3b82f6; color: white; }
+    .reset { background: rgba(255,255,255,0.1); color: #e2e8f0; }
 
-    /* Light text mode adjustments */
-    body.light-text { color: #f8fafc; }
     body.dark-text { color: #0f172a; }
-    body.dark-text .search-box input {
-      background: rgba(0,0,0,0.15);
-      color: #0f172a;
-    }
-    body.dark-text .search-box input::placeholder { color: rgba(0,0,0,0.5); }
-    body.dark-text .link-icon { background: rgba(0,0,0,0.12); }
-
-    @media (max-width: 600px) {
-      .time { font-size: 4rem; }
-      .greeting, .date, .weather { font-size: 1.05rem; }
-      #sidebar { width: 300px; left: -310px; }
-    }
+    body.dark-text .search-box input { background: rgba(0,0,0,0.12); color: #0f172a; }
+    body.dark-text .link-icon { background: rgba(0,0,0,0.1); }
   </style>
 </head>
 <body>
-  <div id="bg-image"></div>
+  <div id="bg"></div>
   <div id="overlay"></div>
 
-  <button id="settings-btn" title="Settings">⚙️</button>
+  <button id="settings-btn">⚙️</button>
   <div id="sidebar-overlay"></div>
 
   <div id="sidebar">
     <div class="sidebar-header">
       <h2>Settings</h2>
-      <button id="close-sidebar">×</button>
+      <button id="close-btn">×</button>
     </div>
 
-    <!-- Background -->
-    <div class="setting-group">
-      <label>Background Type</label>
-      <select id="bg-type">
+    <div class="group">
+      <label>Background</label>
+      <select id="bgType">
         <option value="gradient">Gradient</option>
         <option value="image">Image URL</option>
         <option value="solid">Solid Color</option>
       </select>
     </div>
-    <div class="setting-group" id="image-url-group" style="display:none;">
+    <div class="group" id="imgGroup" style="display:none">
       <label>Image URL</label>
-      <input type="text" id="image-url" placeholder="https://images.unsplash.com/...">
+      <input type="text" id="imgUrl" placeholder="https://...">
     </div>
-    <div class="setting-group" id="solid-color-group" style="display:none;">
-      <label>Solid Color</label>
-      <input type="color" id="solid-color" value="#0f172a">
+    <div class="group" id="colorGroup" style="display:none">
+      <label>Color</label>
+      <input type="color" id="solidColor" value="#0f172a">
     </div>
-
-    <div class="setting-group">
+    <div class="group">
       <label>Overlay Darkness</label>
-      <input type="range" id="overlay-opacity" min="0" max="85" value="40">
+      <input type="range" id="overlayVal" min="0" max="80" value="40">
+    </div>
+    <div class="group">
+      <div class="check"><input type="checkbox" id="autoDim" checked><label for="autoDim">Auto-dim at night</label></div>
     </div>
 
-    <div class="setting-group">
-      <div class="checkbox-row">
-        <input type="checkbox" id="auto-dim" checked>
-        <label for="auto-dim">Auto-dim at night (7pm–6am)</label>
-      </div>
-    </div>
-
-    <!-- Clock & Text -->
-    <div class="setting-group">
+    <div class="group">
       <label>Clock Format</label>
-      <select id="clock-format">
+      <select id="clockFormat">
         <option value="24">24-hour</option>
         <option value="12">12-hour</option>
       </select>
     </div>
-    <div class="setting-group">
-      <div class="checkbox-row">
-        <input type="checkbox" id="show-seconds">
-        <label for="show-seconds">Show seconds</label>
-      </div>
+    <div class="group">
+      <div class="check"><input type="checkbox" id="showSec"><label for="showSec">Show seconds</label></div>
     </div>
-    <div class="setting-group">
+    <div class="group">
       <label>Clock Size</label>
-      <input type="range" id="clock-size" min="40" max="110" value="68">
+      <input type="range" id="clockSize" min="40" max="100" value="65">
     </div>
-    <div class="setting-group">
+    <div class="group">
       <label>Text Mode</label>
-      <select id="text-mode">
+      <select id="textMode">
         <option value="light">Light text</option>
         <option value="dark">Dark text</option>
       </select>
     </div>
 
-    <!-- Greeting & Weather -->
-    <div class="setting-group">
-      <label>Your Name (for greeting)</label>
-      <input type="text" id="user-name" placeholder="Optional">
+    <div class="group">
+      <label>Your Name</label>
+      <input type="text" id="userName" placeholder="Optional">
     </div>
-    <div class="setting-group">
+    <div class="group">
       <label>Weather City</label>
-      <input type="text" id="weather-city" placeholder="e.g. Kathmandu, London, Tokyo">
+      <input type="text" id="city" placeholder="Kathmandu">
     </div>
-    <div class="setting-group">
-      <div class="checkbox-row">
-        <input type="checkbox" id="show-weather" checked>
-        <label for="show-weather">Show Weather</label>
-      </div>
+    <div class="group">
+      <div class="check"><input type="checkbox" id="showWeather" checked><label for="showWeather">Show Weather</label></div>
     </div>
 
-    <!-- Search -->
-    <div class="setting-group">
+    <div class="group">
       <label>Search Engine</label>
-      <select id="search-engine">
+      <select id="engine">
         <option value="google">Google</option>
         <option value="duckduckgo">DuckDuckGo</option>
         <option value="bing">Bing</option>
       </select>
     </div>
 
-    <!-- Visibility -->
-    <div class="setting-group">
-      <div class="checkbox-row">
-        <input type="checkbox" id="show-quote" checked>
-        <label for="show-quote">Show Quote</label>
-      </div>
+    <div class="group">
+      <div class="check"><input type="checkbox" id="showQuote" checked><label for="showQuote">Show Quote</label></div>
     </div>
-    <div class="setting-group">
-      <div class="checkbox-row">
-        <input type="checkbox" id="show-links" checked>
-        <label for="show-links">Show Quick Links</label>
-      </div>
+    <div class="group">
+      <div class="check"><input type="checkbox" id="showLinks" checked><label for="showLinks">Show Links</label></div>
     </div>
 
-    <!-- Quick Links Editor -->
-    <div class="setting-group">
+    <div class="group">
       <label>Quick Links</label>
-      <div class="links-editor" id="links-editor"></div>
-      <button id="add-link-btn">+ Add Link</button>
+      <div id="linksEdit"></div>
+      <button id="add-link">+ Add Link</button>
     </div>
 
-    <div class="btn-row">
-      <button class="btn btn-secondary" id="reset-btn">Reset All</button>
-      <button class="btn btn-primary" id="save-btn">Done</button>
+    <div class="btns">
+      <button class="reset" id="resetBtn">Reset</button>
+      <button class="save" id="saveBtn">Done</button>
     </div>
   </div>
 
-  <!-- Main Content -->
   <div class="greeting" id="greeting">Good morning</div>
   <div class="time" id="time">00:00</div>
-  <div class="date" id="date">Loading...</div>
+  <div class="date" id="date"></div>
   <div class="weather" id="weather"></div>
 
   <div class="search-box">
     <form id="searchForm" action="https://www.google.com/search" method="get" target="_blank">
-      <input type="text" name="q" id="search-input" placeholder="Search the web..." autocomplete="off" autofocus />
+      <input type="text" name="q" placeholder="Search the web..." autofocus>
       <button type="submit">🔍</button>
     </form>
   </div>
@@ -372,308 +225,256 @@
   <div class="quote" id="quote"></div>
 
   <script>
-    // ===== Quotes =====
     const quotes = [
-      { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-      { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
-      { text: "Stay hungry, stay foolish.", author: "Steve Jobs" },
-      { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
-      { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
-      { text: "Everything you’ve ever wanted is on the other side of fear.", author: "George Addair" },
-      { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-      { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-      { text: "The only limit to our realization of tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" },
-      { text: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" }
+      {t:"The only way to do great work is to love what you do.", a:"Steve Jobs"},
+      {t:"Stay hungry, stay foolish.", a:"Steve Jobs"},
+      {t:"The future belongs to those who believe in the beauty of their dreams.", a:"Eleanor Roosevelt"},
+      {t:"It does not matter how slowly you go as long as you do not stop.", a:"Confucius"},
+      {t:"Success is not final, failure is not fatal.", a:"Winston Churchill"},
+      {t:"Believe you can and you're halfway there.", a:"Theodore Roosevelt"},
+      {t:"Do what you can, with what you have, where you are.", a:"Theodore Roosevelt"}
     ];
 
-    // ===== Defaults =====
     const defaults = {
-      bgType: 'gradient',
-      imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80',
-      solidColor: '#0f172a',
-      overlayOpacity: 40,
+      bgType: "gradient",
+      imgUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920",
+      solidColor: "#0f172a",
+      overlay: 40,
       autoDim: true,
-      clockFormat: '24',
-      showSeconds: false,
-      clockSize: 68,
-      textMode: 'light',
-      userName: '',
-      weatherCity: 'Kathmandu',
+      clockFormat: "24",
+      showSec: false,
+      clockSize: 65,
+      textMode: "light",
+      userName: "",
+      city: "Kathmandu",
       showWeather: true,
-      searchEngine: 'google',
+      engine: "google",
       showQuote: true,
       showLinks: true,
       links: [
-        { name: 'Gmail', url: 'https://mail.google.com', icon: '📧' },
-        { name: 'YouTube', url: 'https://youtube.com', icon: '▶️' },
-        { name: 'GitHub', url: 'https://github.com', icon: '🐙' },
-        { name: 'Reddit', url: 'https://reddit.com', icon: '🤖' },
-        { name: 'X', url: 'https://twitter.com', icon: '𝕏' },
-        { name: 'Wiki', url: 'https://wikipedia.org', icon: '📖' }
+        {name:"Gmail", url:"https://mail.google.com", icon:"📧"},
+        {name:"YouTube", url:"https://youtube.com", icon:"▶️"},
+        {name:"GitHub", url:"https://github.com", icon:"🐙"},
+        {name:"Reddit", url:"https://reddit.com", icon:"🤖"},
+        {name:"X", url:"https://twitter.com", icon:"𝕏"},
+        {name:"Wiki", url:"https://wikipedia.org", icon:"📖"}
       ]
     };
 
-    let settings = JSON.parse(localStorage.getItem('newtab-settings-v2')) || structuredClone(defaults);
-    let currentQuoteIndex = 0;
+    let s = JSON.parse(localStorage.getItem("ntp-safe")) || JSON.parse(JSON.stringify(defaults));
+    let qIndex = 0;
 
-    // ===== DOM =====
-    const sidebar = document.getElementById('sidebar');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-    const bgImage = document.getElementById('bg-image');
-    const overlay = document.getElementById('overlay');
-    const timeEl = document.getElementById('time');
-    const dateEl = document.getElementById('date');
-    const greetingEl = document.getElementById('greeting');
-    const weatherEl = document.getElementById('weather');
-    const quoteEl = document.getElementById('quote');
-    const linksEl = document.getElementById('links');
-    const searchForm = document.getElementById('searchForm');
+    const $ = id => document.getElementById(id);
 
-    // ===== Apply everything =====
-    function applySettings() {
+    function apply() {
       // Background
-      if (settings.bgType === 'image') {
-        bgImage.style.backgroundImage = `url('${settings.imageUrl}')`;
-        bgImage.style.opacity = '1';
-        document.body.style.background = 'transparent';
-      } else if (settings.bgType === 'solid') {
-        bgImage.style.opacity = '0';
-        document.body.style.background = settings.solidColor;
+      if (s.bgType === "image") {
+        $("bg").style.backgroundImage = `url('${s.imgUrl}')`;
+        $("bg").style.opacity = "1";
+        document.body.style.background = "transparent";
+      } else if (s.bgType === "solid") {
+        $("bg").style.opacity = "0";
+        document.body.style.background = s.solidColor;
       } else {
-        bgImage.style.opacity = '0';
-        document.body.style.background = 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)';
+        $("bg").style.opacity = "0";
+        document.body.style.background = "linear-gradient(135deg, #0f0c29, #302b63, #24243e)";
       }
 
-      // Auto-dim logic
-      let opacity = settings.overlayOpacity;
-      if (settings.autoDim) {
-        const hour = new Date().getHours();
-        if (hour >= 19 || hour < 6) {
-          opacity = Math.min(85, opacity + 25); // extra dim at night
-        }
+      // Overlay + auto dim
+      let op = s.overlay;
+      if (s.autoDim) {
+        const h = new Date().getHours();
+        if (h >= 19 || h < 6) op = Math.min(80, op + 25);
       }
-      overlay.style.background = `rgba(0,0,0,${opacity / 100})`;
+      $("overlay").style.background = `rgba(0,0,0,${op/100})`;
 
       // Text mode
-      document.body.classList.remove('light-text', 'dark-text');
-      document.body.classList.add(settings.textMode === 'dark' ? 'dark-text' : 'light-text');
+      document.body.className = s.textMode === "dark" ? "dark-text" : "";
 
       // Clock size
-      timeEl.style.fontSize = settings.clockSize / 10 + 'rem';
+      $("time").style.fontSize = (s.clockSize / 10) + "rem";
 
       // Visibility
-      quoteEl.style.display = settings.showQuote ? 'block' : 'none';
-      linksEl.style.display = settings.showLinks ? 'flex' : 'none';
-      weatherEl.style.display = settings.showWeather ? 'block' : 'none';
+      $("quote").style.display = s.showQuote ? "block" : "none";
+      $("links").style.display = s.showLinks ? "flex" : "none";
+      $("weather").style.display = s.showWeather ? "block" : "none";
 
-      // Search engine
-      const engines = {
-        google: 'https://www.google.com/search',
-        duckduckgo: 'https://duckduckgo.com/',
-        bing: 'https://www.bing.com/search'
-      };
-      searchForm.action = engines[settings.searchEngine];
-
-      // Render links
-      renderLinks();
-      renderLinksEditor();
+      // Search
+      const engines = {google:"https://www.google.com/search", duckduckgo:"https://duckduckgo.com/", bing:"https://www.bing.com/search"};
+      $("searchForm").action = engines[s.engine];
 
       // Form values
-      document.getElementById('bg-type').value = settings.bgType;
-      document.getElementById('image-url').value = settings.imageUrl;
-      document.getElementById('solid-color').value = settings.solidColor;
-      document.getElementById('overlay-opacity').value = settings.overlayOpacity;
-      document.getElementById('auto-dim').checked = settings.autoDim;
-      document.getElementById('clock-format').value = settings.clockFormat;
-      document.getElementById('show-seconds').checked = settings.showSeconds;
-      document.getElementById('clock-size').value = settings.clockSize;
-      document.getElementById('text-mode').value = settings.textMode;
-      document.getElementById('user-name').value = settings.userName;
-      document.getElementById('weather-city').value = settings.weatherCity;
-      document.getElementById('show-weather').checked = settings.showWeather;
-      document.getElementById('search-engine').value = settings.searchEngine;
-      document.getElementById('show-quote').checked = settings.showQuote;
-      document.getElementById('show-links').checked = settings.showLinks;
+      $("bgType").value = s.bgType;
+      $("imgUrl").value = s.imgUrl;
+      $("solidColor").value = s.solidColor;
+      $("overlayVal").value = s.overlay;
+      $("autoDim").checked = s.autoDim;
+      $("clockFormat").value = s.clockFormat;
+      $("showSec").checked = s.showSec;
+      $("clockSize").value = s.clockSize;
+      $("textMode").value = s.textMode;
+      $("userName").value = s.userName;
+      $("city").value = s.city;
+      $("showWeather").checked = s.showWeather;
+      $("engine").value = s.engine;
+      $("showQuote").checked = s.showQuote;
+      $("showLinks").checked = s.showLinks;
 
-      toggleBgInputs();
+      toggleBg();
+      renderLinks();
+      renderEdit();
       updateGreeting();
-      if (settings.showWeather) loadWeather();
+      if (s.showWeather) loadWeather();
     }
 
-    function toggleBgInputs() {
-      const type = document.getElementById('bg-type').value;
-      document.getElementById('image-url-group').style.display = type === 'image' ? 'block' : 'none';
-      document.getElementById('solid-color-group').style.display = type === 'solid' ? 'block' : 'none';
+    function toggleBg() {
+      const t = $("bgType").value;
+      $("imgGroup").style.display = t === "image" ? "block" : "none";
+      $("colorGroup").style.display = t === "solid" ? "block" : "none";
     }
 
-    // ===== Clock & Greeting =====
     function updateClock() {
       const now = new Date();
       let h = now.getHours();
-      let m = now.getMinutes().toString().padStart(2, '0');
-      let s = now.getSeconds().toString().padStart(2, '0');
+      let m = String(now.getMinutes()).padStart(2,"0");
+      let sec = String(now.getSeconds()).padStart(2,"0");
 
-      if (settings.clockFormat === '12') {
-        const ampm = h >= 12 ? ' PM' : ' AM';
+      if (s.clockFormat === "12") {
+        const ap = h >= 12 ? " PM" : " AM";
         h = h % 12 || 12;
-        timeEl.textContent = `${h}:${m}${settings.showSeconds ? ':' + s : ''}${ampm}`;
+        $("time").textContent = h + ":" + m + (s.showSec ? ":" + sec : "") + ap;
       } else {
-        timeEl.textContent = `${h.toString().padStart(2,'0')}:${m}${settings.showSeconds ? ':' + s : ''}`;
+        $("time").textContent = String(h).padStart(2,"0") + ":" + m + (s.showSec ? ":" + sec : "");
       }
-
-      dateEl.textContent = now.toLocaleDateString('en-US', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-      });
-
-      // Re-apply auto-dim every minute in case time crosses threshold
-      if (now.getMinutes() === 0 && now.getSeconds() < 2) applySettings();
+      $("date").textContent = now.toLocaleDateString("en-US", {weekday:"long", year:"numeric", month:"long", day:"numeric"});
     }
 
     function updateGreeting() {
-      const hour = new Date().getHours();
-      let greet = 'Good evening';
-      if (hour < 12) greet = 'Good morning';
-      else if (hour < 18) greet = 'Good afternoon';
-
-      if (settings.userName.trim()) {
-        greetingEl.textContent = `${greet}, ${settings.userName.trim()}`;
-      } else {
-        greetingEl.textContent = greet;
-      }
+      const h = new Date().getHours();
+      let g = "Good evening";
+      if (h < 12) g = "Good morning";
+      else if (h < 18) g = "Good afternoon";
+      $("greeting").textContent = s.userName.trim() ? g + ", " + s.userName.trim() : g;
     }
 
-    // ===== Weather (using wttr.in - free, no key) =====
     async function loadWeather() {
-      if (!settings.weatherCity.trim()) {
-        weatherEl.textContent = '';
-        return;
-      }
+      if (!s.city.trim()) { $("weather").textContent = ""; return; }
       try {
-        const city = encodeURIComponent(settings.weatherCity.trim());
-        const res = await fetch(`https://wttr.in/${city}?format=%c+%t+%C`);
-        const text = await res.text();
-        weatherEl.textContent = text.trim();
-      } catch (e) {
-        weatherEl.textContent = 'Weather unavailable';
+        const res = await fetch("https://wttr.in/" + encodeURIComponent(s.city.trim()) + "?format=%c+%t+%C");
+        $("weather").textContent = await res.text();
+      } catch(e) {
+        $("weather").textContent = "";
       }
     }
 
-    // ===== Quotes =====
     function showQuote() {
-      const q = quotes[currentQuoteIndex];
-      quoteEl.textContent = `“${q.text}” — ${q.author}`;
-      currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+      const q = quotes[qIndex];
+      $("quote").textContent = "“" + q.t + "” — " + q.a;
+      qIndex = (qIndex + 1) % quotes.length;
     }
 
-    // ===== Links =====
     function renderLinks() {
-      linksEl.innerHTML = '';
-      settings.links.forEach(link => {
-        const a = document.createElement('a');
-        a.href = link.url;
-        a.className = 'link';
-        a.target = '_blank';
-        a.innerHTML = `<div class="link-icon">${link.icon || '🔗'}</div><span>${link.name}</span>`;
-        linksEl.appendChild(a);
+      $("links").innerHTML = "";
+      s.links.forEach(l => {
+        const a = document.createElement("a");
+        a.href = l.url;
+        a.target = "_blank";
+        a.className = "link";
+        a.innerHTML = `<div class="link-icon">${l.icon||"🔗"}</div><span>${l.name}</span>`;
+        $("links").appendChild(a);
       });
     }
 
-    function renderLinksEditor() {
-      const editor = document.getElementById('links-editor');
-      editor.innerHTML = '';
-      settings.links.forEach((link, i) => {
-        const div = document.createElement('div');
-        div.className = 'link-item';
-        div.innerHTML = `
-          <input type="text" value="${link.icon}" style="width:50px" placeholder="Icon">
-          <input type="text" value="${link.name}" placeholder="Name">
-          <input type="text" value="${link.url}" placeholder="URL">
-          <button data-index="${i}">×</button>
-        `;
-        editor.appendChild(div);
+    function renderEdit() {
+      const box = $("linksEdit");
+      box.innerHTML = "";
+      s.links.forEach((l, i) => {
+        const d = document.createElement("div");
+        d.className = "link-edit";
+        d.innerHTML = `<input value="${l.icon}" style="width:45px" placeholder="icon">
+                       <input value="${l.name}" placeholder="Name">
+                       <input value="${l.url}" placeholder="URL">
+                       <button data-i="${i}">×</button>`;
+        box.appendChild(d);
       });
-
-      // Remove buttons
-      editor.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          settings.links.splice(btn.dataset.index, 1);
-          renderLinksEditor();
-        });
+      box.querySelectorAll("button").forEach(b => {
+        b.onclick = () => {
+          s.links.splice(b.dataset.i, 1);
+          renderEdit();
+        };
       });
     }
 
-    document.getElementById('add-link-btn').addEventListener('click', () => {
-      settings.links.push({ name: 'New', url: 'https://', icon: '🔗' });
-      renderLinksEditor();
-    });
+    $("add-link").onclick = () => {
+      s.links.push({name:"New", url:"https://", icon:"🔗"});
+      renderEdit();
+    };
 
-    // ===== Sidebar =====
-    function openSidebar() {
-      sidebar.classList.add('open');
-      sidebarOverlay.classList.add('visible');
-      renderLinksEditor();
+    $("settings-btn").onclick = () => {
+      $("sidebar").classList.add("open");
+      $("sidebar-overlay").classList.add("show");
+      renderEdit();
+    };
+    $("close-btn").onclick = closeSide;
+    $("sidebar-overlay").onclick = closeSide;
+    function closeSide() {
+      $("sidebar").classList.remove("open");
+      $("sidebar-overlay").classList.remove("show");
     }
-    function closeSidebarFn() {
-      sidebar.classList.remove('open');
-      sidebarOverlay.classList.remove('visible');
-    }
 
-    document.getElementById('settings-btn').addEventListener('click', openSidebar);
-    document.getElementById('close-sidebar').addEventListener('click', closeSidebarFn);
-    sidebarOverlay.addEventListener('click', closeSidebarFn);
-    document.getElementById('bg-type').addEventListener('change', toggleBgInputs);
+    $("bgType").onchange = toggleBg;
 
-    document.getElementById('save-btn').addEventListener('click', () => {
-      // Collect link edits
-      const items = document.querySelectorAll('.link-item');
-      settings.links = [];
+    $("saveBtn").onclick = () => {
+      // collect links
+      const items = document.querySelectorAll(".link-edit");
+      s.links = [];
       items.forEach(item => {
-        const inputs = item.querySelectorAll('input');
-        settings.links.push({
-          icon: inputs[0].value.trim() || '🔗',
-          name: inputs[1].value.trim() || 'Link',
-          url: inputs[2].value.trim() || 'https://'
+        const inputs = item.querySelectorAll("input");
+        s.links.push({
+          icon: inputs[0].value.trim() || "🔗",
+          name: inputs[1].value.trim() || "Link",
+          url: inputs[2].value.trim() || "https://"
         });
       });
 
-      settings.bgType = document.getElementById('bg-type').value;
-      settings.imageUrl = document.getElementById('image-url').value;
-      settings.solidColor = document.getElementById('solid-color').value;
-      settings.overlayOpacity = +document.getElementById('overlay-opacity').value;
-      settings.autoDim = document.getElementById('auto-dim').checked;
-      settings.clockFormat = document.getElementById('clock-format').value;
-      settings.showSeconds = document.getElementById('show-seconds').checked;
-      settings.clockSize = +document.getElementById('clock-size').value;
-      settings.textMode = document.getElementById('text-mode').value;
-      settings.userName = document.getElementById('user-name').value;
-      settings.weatherCity = document.getElementById('weather-city').value;
-      settings.showWeather = document.getElementById('show-weather').checked;
-      settings.searchEngine = document.getElementById('search-engine').value;
-      settings.showQuote = document.getElementById('show-quote').checked;
-      settings.showLinks = document.getElementById('show-links').checked;
+      s.bgType = $("bgType").value;
+      s.imgUrl = $("imgUrl").value;
+      s.solidColor = $("solidColor").value;
+      s.overlay = +$("overlayVal").value;
+      s.autoDim = $("autoDim").checked;
+      s.clockFormat = $("clockFormat").value;
+      s.showSec = $("showSec").checked;
+      s.clockSize = +$("clockSize").value;
+      s.textMode = $("textMode").value;
+      s.userName = $("userName").value;
+      s.city = $("city").value;
+      s.showWeather = $("showWeather").checked;
+      s.engine = $("engine").value;
+      s.showQuote = $("showQuote").checked;
+      s.showLinks = $("showLinks").checked;
 
-      localStorage.setItem('newtab-settings-v2', JSON.stringify(settings));
-      applySettings();
-      closeSidebarFn();
-    });
+      localStorage.setItem("ntp-safe", JSON.stringify(s));
+      apply();
+      closeSide();
+    };
 
-    document.getElementById('reset-btn').addEventListener('click', () => {
-      if (confirm('Reset all settings to default?')) {
-        settings = structuredClone(defaults);
-        localStorage.setItem('newtab-settings-v2', JSON.stringify(settings));
-        applySettings();
+    $("resetBtn").onclick = () => {
+      if (confirm("Reset all settings?")) {
+        s = JSON.parse(JSON.stringify(defaults));
+        localStorage.setItem("ntp-safe", JSON.stringify(s));
+        apply();
       }
-    });
+    };
 
-    // ===== Init =====
-    applySettings();
+    // Init
+    apply();
     updateClock();
     setInterval(updateClock, 1000);
     showQuote();
-    setInterval(showQuote, 5 * 60 * 1000); // change quote every 5 minutes
+    setInterval(showQuote, 300000);
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeSidebarFn();
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeSide();
     });
   </script>
 </body>
