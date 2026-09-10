@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>नयाँ ट्याब</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300e5ff' stroke-width='2'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@500;600;700;800&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Noto Sans Devanagari', -apple-system, sans-serif;
+      font-weight: 700;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      background: #1a1a2e;
+      transition: background 0.8s ease;
+    }
+
+    #bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      z-index: -2; opacity: 0; transition: opacity 0.7s ease;
+    }
+    #overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: -1;
+    }
+
+    /* Analog Clock */
+    .clock-container {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+      position: relative;
+      cursor: pointer;
+      margin-bottom: 1.8rem;
+      transition: transform 0.3s;
+    }
+    .clock-container:hover { transform: scale(1.03); }
+
+    .clock-face {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .hand {
+      position: absolute;
+      bottom: 50%; left: 50%;
+      transform-origin: bottom center;
+      border-radius: 6px;
+      background: white;
+    }
+    .hour-hand { width: 6px; height: 55px; margin-left: -3px; background: #e0e7ff; }
+    .minute-hand { width: 4px; height: 75px; margin-left: -2px; background: #c7d2fe; }
+    .second-hand { width: 2px; height: 85px; margin-left: -1px; background: #67e8f9; }
+
+    .center-dot {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 12px; height: 12px;
+      background: #67e8f9;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px #67e8f9;
+    }
+
+    /* Digital Clock (hidden by default) */
+    .digital-time {
+      display: none;
+      font-size: 5.8rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 1.2rem;
+      cursor: pointer;
+    }
+
+    .weekday {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+      opacity: 0.95;
+    }
+    .nepali-date {
+      font-size: 1.25rem;
+      font-weight: 700;
+      opacity: 0.85;
+      margin-bottom: 1.5rem;
+    }
+    .greeting {
+      font-size: 1.5rem;
+      font-weight: 700;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .search-box {
+      width: 90%; max-width: 480px;
+      position: relative;
+      margin-bottom: 2.4rem;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 16px 52px 16px 24px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 50px;
+      background: rgba(255,255,255,0.09);
+      backdrop-filter: blur(12px);
+      color: white;
+      outline: none;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    }
+    .search-box input::placeholder { color: rgba(255,255,255,0.5); }
+    .search-box button {
+      position: absolute; right: 16px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none;
+      color: white; font-size: 1.25rem; cursor: pointer;
+    }
+
+    .links {
+      display: flex; gap: 1.6rem; flex-wrap: wrap;
+      justify-content: center; max-width: 700px;
+    }
+    .link {
+      display: flex; flex-direction: column; align-items: center;
+      text-decoration: none; color: white; width: 76px;
+      font-weight: 700; font-size: 0.9rem;
+      transition: transform 0.2s;
+    }
+    .link:hover { transform: translateY(-5px); }
+    .link-icon {
+      width: 58px; height: 58px; border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 8px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .link-icon img { width: 28px; height: 28px; object-fit: contain; }
+
+    .quote {
+      position: absolute; bottom: 70px;
+      max-width: 580px; font-size: 1.05rem;
+      font-weight: 600; font-style: italic;
+      opacity: 0.85; padding: 0 20px;
+    }
+
+    .nav-btns {
+      position: fixed; bottom: 22px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 14px; z-index: 50;
+    }
+    .nav-btns button {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+      color: white; font-size: 1.2rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-btns button:hover { background: rgba(255,255,255,0.22); }
+
+    #settings-btn {
+      position: fixed; top: 18px; left: 18px;
+      width: 46px; height: 46px; border-radius: 14px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white; cursor: pointer; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #settings-btn svg { width: 22px; height: 22px; }
+
+    #sidebar {
+      position: fixed; top: 0; left: -350px; width: 330px; height: 100%;
+      background: rgba(15, 15, 35, 0.92);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      z-index: 200; padding: 22px 18px 50px;
+      overflow-y: auto; color: #e2e8f0;
+      transition: left 0.3s ease; font-weight: 600;
+    }
+    #sidebar.open { left: 0; }
+    #sidebar-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+      z-index: 150; opacity: 0; visibility: hidden; transition: 0.3s;
+    }
+    #sidebar-overlay.show { opacity: 1; visibility: visible; }
+
+    .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+    .sidebar-header h2 { font-size: 1.3rem; font-weight: 800; }
+    #close-btn { background: none; border: none; color: #94a3b8; font-size: 1.6rem; cursor: pointer; }
+
+    .group { margin-bottom: 18px; }
+    .group label { display: block; font-size: 0.78rem; color: #94a3b8; margin-bottom: 6px; font-weight: 700; }
+    .group select, .group input[type=text], .group input[type=color], .group input[type=password] {
+      width: 100%; padding: 10px 12px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: white; font-size: 0.95rem; font-weight: 600;
+    }
+    .group input[type=range] { width: 100%; }
+    .check { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+    .check label { color: #e2e8f0; font-size: 0.95rem; margin: 0; font-weight: 600; }
+
+    .btns { display: flex; gap: 10px; margin-top: 24px; }
+    .btns button {
+      flex: 1; padding: 12px; border: none; border-radius: 10px;
+      cursor: pointer; font-weight: 700; font-size: 1rem;
+    }
+    .save { background: #3b82f6; color: white; }
+    .reset { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+  </style>
+</head>
+<body>
+  <div id="bg"></div>
+  <div id="overlay"></div>
+
+  <button id="settings-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+  </button>
+
+  <div id="sidebar-overlay"></div>
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <h2>सेटिङहरू</h2>
+      <button id="close-btn">×</button>
+    </div>
+
+    <div class="group">
+      <label>पृष्ठभूमि रङ</label>
+      <input type="color" id="bgColor" value="#1a1a2e">
+    </div>
+    <div class="group">
+      <label>रातको रङ</label>
+      <input type="color" id="nightColor" value="#0f0c1a">
+    </div>
+    <div class="group">
+      <label>ओभरले अँध्यारो</label>
+      <input type="range" id="overlayVal" min="0" max="70" value="35">
+    </div>
+
+    <div class="group">
+      <label>तपाईंको नाम</label>
+      <input type="text" id="userName" placeholder="वैकल्पिक">
+    </div>
+
+    <div class="group">
+      <label>छिटो लिङ्कहरू</label>
+      <div id="linksEdit"></div>
+      <button id="add-link" style="width:100%;padding:10px;margin-top:8px;background:rgba(59,130,246,0.2);border:1px dashed #60a5fa;color:#93c5fd;border-radius:8px;cursor:pointer;font-weight:700;">+ लिङ्क थप्नुहोस्</button>
+    </div>
+
+    <div class="btns">
+      <button class="reset" id="resetBtn">रिसेट</button>
+      <button class="save" id="saveBtn">सम्पन्न</button>
+    </div>
+  </div>
+
+  <!-- Analog Clock -->
+  <div class="clock-container" id="analogClock">
+    <div class="clock-face">
+      <div class="hand hour-hand" id="hourHand"></div>
+      <div class="hand minute-hand" id="minuteHand"></div>
+      <div class="hand second-hand" id="secondHand"></div>
+      <div class="center-dot"></div>
+    </div>
+  </div>
+
+  <!-- Digital Clock -->
+  <div class="digital-time" id="digitalTime">००:००</div>
+
+  <div class="weekday" id="weekday">बुधबार</div>
+  <div class="nepali-date" id="nepaliDate">२४ भदौ, २०८३</div>
+  <div class="greeting" id="greeting">शुभ प्रभात</div>
+
+  <div class="search-box">
+    <form action="https://www.google.com/search" method="get" target="_blank">
+      <input type="text" name="q" placeholder="वेब खोज्नुहोस्..." autofocus>
+      <button type="submit">🔍</button>
+    </form>
+  </div>
+
+  <div class="links" id="links"></div>
+  <div class="quote" id="quote"></div>
+
+  <div class="nav-btns">
+    <button id="prevBtn">‹</button>
+    <button id="nextBtn">›</button>
+  </div>
+
+  <script>
+    const nepaliWeekdays = ["आइतबार","सोमबार","मङ्गलबार","बुधबार","बिहिबार","शुक्रबार","शनिबार"];
+    const nepaliMonths = ["बैशाख","जेठ","असार","साउन","भदौ","असोज","कार्तिक","मंसिर","पुस","माघ","फागुन","चैत"];
+    const nepaliDigits = ["०","१","२","३","४","५","६","७","८","९"];
+
+    function toNepaliNumber(num) {
+      return String(num).split("").map(d => nepaliDigits[d] || d).join("");
+    }
+
+    function adToBs(adYear, adMonth, adDay) {
+      let bsYear = adYear + 56;
+      let bsMonth = adMonth + 8;
+      let bsDay = adDay + 16;
+      if (bsDay > 30) { bsDay -= 30; bsMonth++; }
+      if (bsMonth > 12) { bsMonth -= 12; bsYear++; }
+      return `${toNepaliNumber(bsDay)} ${nepaliMonths[bsMonth-1]}, ${toNepaliNumber(bsYear)}`;
+    }
+
+    const quotes = [
+      "शान्ति भित्रबाट आउँछ। बाहिर खोज्नुहोस् न। — बुद्ध",
+      "तपाईंले जुन कुरा समात्नुहुन्छ, त्यही मात्र हराउनुहुन्छ। — बुद्ध",
+      "मन नै सबै हो। तपाईंले जे सोच्नुहुन्छ, त्यही बन्नुहुन्छ। — बुद्ध",
+      "विगतमा नबस्नुहोस्, भविष्यको सपना नदेख्नुहोस्, वर्तमानमा मन केन्द्रित गर्नुहोस्। — बुद्ध",
+      "प्रकृति हतार गर्दैन, तर सबै कुरा पूरा हुन्छ। — लाओ त्जु"
+    ];
+
+    const defaultImages = [
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90",
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=90",
+      "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1920&q=90",
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=90"
+    ];
+
+    const defaults = {
+      bgColor: "#1a1a2e",
+      nightColor: "#0f0c1a",
+      overlay: 35,
+      userName: "",
+      imageIndex: 0,
+      isAnalog: true,
+      links: [
+        {name: "जिमेल", url: "https://mail.google.com"},
+        {name: "यूट्युब", url: "https://youtube.com"},
+        {name: "गिटहब", url: "https://github.com"},
+        {name: "रेडिट", url: "https://reddit.com"},
+        {name: "एक्स", url: "https://twitter.com"},
+        {name: "विकि", url: "https://wikipedia.org"}
+      ]
+    };
+
+    let s = JSON.parse(localStorage.getItem("ntp-ne")) || JSON.parse(JSON.stringify(defaults));
+    let qIndex = 0;
+    const $ = id => document.getElementById(id);
+
+    function apply() {
+      const hour = new Date().getHours();
+      const isNight = hour >= 19 || hour < 6;
+      document.body.style.background = isNight ? s.nightColor : s.bgColor;
+
+      $("overlay").style.background = `rgba(0,0,0,${s.overlay/100})`;
+
+      if (defaultImages[s.imageIndex]) {
+        $("bg").style.backgroundImage = `url('${defaultImages[s.imageIndex]}')`;
+        $("bg").style.opacity = "0.45";
+      }
+
+      $("bgColor").value = s.bgColor;
+      $("nightColor").value = s.nightColor;
+      $("overlayVal").value = s.overlay;
+      $("userName").value = s.userName;
+
+      // Clock mode
+      if (s.isAnalog) {
+        $("analogClock").style.display = "block";
+        $("digitalTime").style.display = "none";
+      } else {
+        $("analogClock").style.display = "none";
+        $("digitalTime").style.display = "block";
+      }
+
+      renderLinks();
+      renderEdit();
+      updateGreeting();
+      updateDate();
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const h = now.getHours();
+      const m = now.getMinutes();
+      const sec = now.getSeconds();
+
+      // Analog
+      const hourDeg = (h % 12) * 30 + m * 0.5;
+      const minuteDeg = m * 6;
+      const secondDeg = sec * 6;
+
+      $("hourHand").style.transform = `rotate(${hourDeg}deg)`;
+      $("minuteHand").style.transform = `rotate(${minuteDeg}deg)`;
+      $("secondHand").style.transform = `rotate(${secondDeg}deg)`;
+
+      // Digital
+      const displayH = String(h).padStart(2,"0");
+      const displayM = String(m).padStart(2,"0");
+      $("digitalTime").textContent = toNepaliNumber(displayH) + ":" + toNepaliNumber(displayM);
+    }
+
+    function updateDate() {
+      const now = new Date();
+      $("weekday").textContent = nepaliWeekdays[now.getDay()];
+      $("nepaliDate").textContent = adToBs(now.getFullYear(), now.getMonth()+1, now.getDate());
+    }
+
+    function updateGreeting() {
+      const h = new Date().getHours();
+      let g = "शुभ सन्ध्या";
+      if (h < 12) g = "शुभ प्रभात";
+      else if (h < 17) g = "शुभ दिउँसो";
+      $("greeting").textContent = s.userName.trim() ? g + ", " + s.userName.trim() : g;
+    }
+
+    function showQuote() {
+      $("quote").textContent = quotes[qIndex];
+      qIndex = (qIndex + 1) % quotes.length;
+    }
+
+    function getDomain(url) {
+      try { return new URL(url).hostname.replace("www.",""); } catch { return ""; }
+    }
+
+    function renderLinks() {
+      $("links").innerHTML = "";
+      s.links.forEach(l => {
+        const a = document.createElement("a");
+        a.href = l.url; a.target = "_blank"; a.className = "link";
+
+        const icon = document.createElement("div");
+        icon.className = "link-icon";
+        const domain = getDomain(l.url);
+        if (domain) {
+          const img = document.createElement("img");
+          img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+          img.onerror = () => { icon.textContent = "🔗"; };
+          icon.appendChild(img);
+        } else {
+          icon.textContent = "🔗";
+        }
+        a.appendChild(icon);
+
+        const span = document.createElement("span");
+        span.textContent = l.name;
+        a.appendChild(span);
+        $("links").appendChild(a);
+      });
+    }
+
+    function renderEdit() {
+      const box = $("linksEdit");
+      box.innerHTML = "";
+      s.links.forEach((l, i) => {
+        const d = document.createElement("div");
+        d.style.display = "flex"; d.style.gap = "6px"; d.style.marginBottom = "6px";
+        d.innerHTML = `
+          <input value="${l.name}" style="flex:1" placeholder="नाम">
+          <input value="${l.url}" style="flex:2" placeholder="लिङ्क">
+          <button data-i="${i}" style="width:32px;background:rgba(239,68,68,0.3);border:none;color:#fca5a5;border-radius:6px;cursor:pointer;">×</button>
+        `;
+        box.appendChild(d);
+      });
+      box.querySelectorAll("button").forEach(b => {
+        b.onclick = () => { s.links.splice(+b.dataset.i, 1); renderEdit(); };
+      });
+    }
+
+    // Toggle analog/digital
+    $("analogClock").onclick = () => {
+      s.isAnalog = false;
+      localStorage.setItem("ntp-ne", JSON.stringify(s));
+      apply();
+    };
+    $("digitalTime").onclick = () => {
+      s.isAnalog = true;
+      localStorage.setItem("ntp-ne", JSON.stringify(s));
+      apply();
+    };
+
+    $("settings-btn").onclick = () => {
+      $("sidebar").classList.add("open");
+      $("sidebar-overlay").classList.add("show");
+      renderEdit();
+    };
+    $("close-btn").onclick = closeSide;
+    $("sidebar-overlay").onclick = closeSide;
+    function closeSide() {
+      $("sidebar").classList.remove("open");
+      $("sidebar-overlay").classList.remove("show");
+    }
+
+    $("prevBtn").onclick = () => {
+      s.imageIndex = (s.imageIndex - 1 + defaultImages.length) % defaultImages.length;
+      localStorage.setItem("ntp-ne", JSON.stringify(s));
+      apply();
+    };
+    $("nextBtn").onclick = () => {
+      s.imageIndex = (s.imageIndex + 1) % defaultImages.length;
+      localStorage.setItem("ntp-ne", JSON.stringify(s));
+      apply();
+    };
+
+    $("add-link").onclick = () => {
+      s.links.push({name: "नयाँ", url: "https://"});
+      renderEdit();
+    };
+
+    $("saveBtn").onclick = () => {
+      const items = document.querySelectorAll("#linksEdit > div");
+      s.links = [];
+      items.forEach(item => {
+        const inputs = item.querySelectorAll("input");
+        s.links.push({
+          name: inputs[0].value.trim() || "लिङ्क",
+          url: inputs[1].value.trim() || "https://"
+        });
+      });
+      s.bgColor = $("bgColor").value;
+      s.nightColor = $("nightColor").value;
+      s.overlay = +$("overlayVal").value;
+      s.userName = $("userName").value;
+
+      localStorage.setItem("ntp-ne", JSON.stringify(s));
+      apply();
+      closeSide();
+    };
+
+    $("resetBtn").onclick = () => {
+      if (confirm("सबै सेटिङ रिसेट गर्ने हो?")) {
+        s = JSON.parse(JSON.stringify(defaults));
+        localStorage.setItem("ntp-ne", JSON.stringify(s));
+        apply();
+      }
+    };
+
+    apply();
+    updateClock();
+    setInterval(updateClock, 1000);
+    showQuote();
+    setInterval(showQuote, 300000);
+    setInterval(updateDate, 60000);
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeSide();
+    });
+  </script>
+</body>
+</html>
