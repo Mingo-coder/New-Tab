@@ -4,86 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>नयाँ ट्याब</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237dd3fc' stroke-width='2'><circle cx='12' cy='12' r='10'/><path d='M12 6v6l4 2'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2'><circle cx='12' cy='12' r='10'/><path d='M12 6v6l4 2'/></svg>">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@600;700;800&family=Outfit:wght@500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@600;700;800&display=swap');
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #f0f4ff;
+      --card: #ffffff;
+      --primary: #4f46e5;
+      --text: #1e1b4b;
+      --muted: #6366f1;
+      --accent: #a5b4fc;
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Noto Sans Devanagari', 'Outfit', system-ui, sans-serif;
+      font-family: 'Noto Sans Devanagari', system-ui, sans-serif;
       font-weight: 700;
-      color: #f0f9ff;
-      overflow: hidden;
-      background: radial-gradient(ellipse at 20% 50%, #1e1b4b 0%, #0f172a 45%, #020617 100%);
-      position: relative;
-    }
-
-    /* Subtle star particles */
-    body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: 
-        radial-gradient(1.5px 1.5px at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 70% 20%, rgba(255,255,255,0.3) 0%, transparent 100%),
-        radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.35) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 85% 60%, rgba(255,255,255,0.25) 0%, transparent 100%),
-        radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.3) 0%, transparent 100%);
-      background-size: 100% 100%;
-      pointer-events: none;
-      z-index: 0;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 40%, #fdf4ff 100%);
+      color: var(--text);
+      overflow-x: hidden;
     }
 
     .container {
       display: flex;
       align-items: center;
-      gap: 80px;
-      max-width: 1100px;
+      gap: 70px;
+      max-width: 1000px;
       width: 100%;
-      padding: 0 40px;
-      position: relative;
-      z-index: 1;
+      padding: 40px 30px;
     }
 
-    /* ===== LEFT: Clock ===== */
+    /* LEFT - Clock */
     .left {
       flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
 
-    .clock-container {
-      width: 240px;
-      height: 240px;
+    .clock-card {
+      width: 230px;
+      height: 230px;
       border-radius: 50%;
+      background: var(--card);
+      box-shadow: 0 20px 40px rgba(79, 70, 229, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(28px) saturate(160%);
-      -webkit-backdrop-filter: blur(28px) saturate(160%);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 0 40px rgba(125, 211, 252, 0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .clock-container:hover {
+    .clock-card:hover {
       transform: scale(1.04);
-      box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        0 0 50px rgba(125, 211, 252, 0.15);
+      box-shadow: 0 25px 50px rgba(79, 70, 229, 0.18);
     }
 
     .hand {
@@ -91,106 +68,71 @@
       bottom: 50%;
       left: 50%;
       transform-origin: bottom center;
-      border-radius: 10px;
+      border-radius: 8px;
+      background: var(--primary);
     }
-    .hour-hand {
-      width: 7px;
-      height: 58px;
-      margin-left: -3.5px;
-      background: #e0f2fe;
-    }
-    .minute-hand {
-      width: 5px;
-      height: 82px;
-      margin-left: -2.5px;
-      background: #bae6fd;
-    }
-    .second-hand {
-      width: 2.5px;
-      height: 92px;
-      margin-left: -1.25px;
-      background: #7dd3fc;
-    }
+    .hour-hand { width: 6px; height: 55px; margin-left: -3px; }
+    .minute-hand { width: 4px; height: 75px; margin-left: -2px; background: #6366f1; }
+    .second-hand { width: 2px; height: 85px; margin-left: -1px; background: #a5b4fc; }
     .center-dot {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 13px;
-      height: 13px;
-      background: #7dd3fc;
+      width: 12px; height: 12px;
+      background: var(--primary);
       border-radius: 50%;
+      position: absolute;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 16px #7dd3fc;
     }
 
     .digital-time {
       display: none;
-      font-size: 4.8rem;
+      font-size: 4.2rem;
       font-weight: 800;
-      letter-spacing: -2px;
+      color: var(--primary);
       cursor: pointer;
-      color: #e0f2fe;
-      text-shadow: 0 0 30px rgba(125, 211, 252, 0.3);
+      letter-spacing: -1px;
     }
 
-    /* ===== RIGHT: Content ===== */
+    /* RIGHT */
     .right {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
     }
 
     .weekday {
-      font-size: 2.1rem;
+      font-size: 2rem;
       font-weight: 800;
-      letter-spacing: 1.5px;
-      margin-bottom: 0.3rem;
-      color: #e0f2fe;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
     }
     .nepali-date {
-      font-size: 1.25rem;
-      font-weight: 700;
-      opacity: 0.8;
-      margin-bottom: 1.4rem;
-      color: #bae6fd;
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 1.3rem;
     }
     .greeting {
-      font-size: 1.7rem;
-      font-weight: 700;
-      margin-bottom: 2.2rem;
-      color: #f0f9ff;
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      color: var(--text);
     }
 
-    /* Search */
     .search-box {
-      width: 100%;
-      max-width: 420px;
       position: relative;
-      margin-bottom: 2.4rem;
+      max-width: 420px;
+      margin-bottom: 2.2rem;
     }
     .search-box input {
       width: 100%;
-      padding: 15px 50px 15px 22px;
+      padding: 16px 52px 16px 22px;
       font-size: 1.1rem;
       font-weight: 600;
+      border: none;
       border-radius: 50px;
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      color: #f0f9ff;
+      background: var(--card);
+      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.1);
+      color: var(--text);
       outline: none;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .search-box input:focus {
-      border-color: rgba(125, 211, 252, 0.4);
-      background: rgba(255, 255, 255, 0.1);
     }
     .search-box input::placeholder {
-      color: rgba(224, 242, 254, 0.4);
+      color: #a5b4fc;
     }
     .search-box button {
       position: absolute;
@@ -199,15 +141,14 @@
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: #7dd3fc;
-      font-size: 1.2rem;
+      color: var(--primary);
+      font-size: 1.3rem;
       cursor: pointer;
     }
 
-    /* Links */
     .links {
       display: flex;
-      gap: 1.3rem;
+      gap: 1.2rem;
       flex-wrap: wrap;
       margin-bottom: 2rem;
     }
@@ -216,68 +157,170 @@
       flex-direction: column;
       align-items: center;
       text-decoration: none;
-      color: #e0f2fe;
-      width: 70px;
+      color: var(--text);
+      width: 72px;
+      font-size: 0.9rem;
       font-weight: 700;
-      font-size: 0.88rem;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s;
     }
-    .link:hover {
-      transform: translateY(-5px);
-    }
+    .link:hover { transform: translateY(-4px); }
     .link-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 7px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      margin-bottom: 8px;
       overflow: hidden;
     }
     .link-icon img {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       object-fit: contain;
     }
 
     .quote {
       font-size: 1.05rem;
-      font-weight: 600;
       font-style: italic;
-      opacity: 0.75;
+      color: var(--muted);
       max-width: 420px;
       line-height: 1.5;
-      color: #bae6fd;
     }
 
-    /* Responsive */
+    /* Small Settings */
+    #settings-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--card);
+      border: none;
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.12);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1.2rem;
+      z-index: 100;
+    }
+
+    #sidebar {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 300px;
+      height: 100%;
+      background: var(--card);
+      box-shadow: -10px 0 40px rgba(0,0,0,0.08);
+      padding: 24px 20px;
+      z-index: 200;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+    }
+    #sidebar.open { right: 0; }
+    #sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.2);
+      z-index: 150;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+    #sidebar-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .sidebar-header h2 {
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+    #close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .group {
+      margin-bottom: 18px;
+    }
+    .group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .group input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #e0e7ff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      outline: none;
+    }
+
+    .save-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
     @media (max-width: 800px) {
       .container {
         flex-direction: column;
         gap: 40px;
         text-align: center;
       }
-      .right {
-        align-items: center;
-        text-align: center;
-      }
-      .links {
-        justify-content: center;
-      }
+      .right { text-align: center; }
+      .links { justify-content: center; }
     }
   </style>
 </head>
 <body>
 
+  <button id="settings-btn">⚙️</button>
+
+  <div id="sidebar-overlay"></div>
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <h2>सेटिङ</h2>
+      <button id="close-btn">×</button>
+    </div>
+    <div class="group">
+      <label>तपाईंको नाम</label>
+      <input type="text" id="userName" placeholder="वैकल्पिक">
+    </div>
+    <button class="save-btn" id="saveBtn">सम्पन्न</button>
+  </div>
+
   <div class="container">
     <!-- LEFT -->
     <div class="left">
-      <div class="clock-container" id="analogClock">
+      <div class="clock-card" id="analogClock">
         <div class="hand hour-hand" id="hourHand"></div>
         <div class="hand minute-hand" id="minuteHand"></div>
         <div class="hand second-hand" id="secondHand"></div>
@@ -337,18 +380,19 @@
       { name: "विकि", url: "https://wikipedia.org" }
     ];
 
-    const $ = id => document.getElementById(id);
+    let s = JSON.parse(localStorage.getItem("ntp-light")) || { userName: "" };
     let qIndex = 0;
+    const $ = id => document.getElementById(id);
 
     function updateClock() {
       const now = new Date();
       const h = now.getHours();
       const m = now.getMinutes();
-      const s = now.getSeconds();
+      const sec = now.getSeconds();
 
       $("hourHand").style.transform = `rotate(${(h%12)*30 + m*0.5}deg)`;
       $("minuteHand").style.transform = `rotate(${m*6}deg)`;
-      $("secondHand").style.transform = `rotate(${s*6}deg)`;
+      $("secondHand").style.transform = `rotate(${sec*6}deg)`;
 
       $("digitalTime").textContent = 
         toNepali(String(h).padStart(2,"0")) + ":" + 
@@ -366,7 +410,7 @@
       let g = "शुभ सन्ध्या";
       if (h < 12) g = "शुभ प्रभात";
       else if (h < 17) g = "शुभ दिउँसो";
-      $("greeting").textContent = g;
+      $("greeting").textContent = s.userName.trim() ? g + ", " + s.userName.trim() : g;
     }
 
     function showQuote() {
@@ -410,6 +454,26 @@
     $("digitalTime").onclick = () => {
       $("digitalTime").style.display = "none";
       $("analogClock").style.display = "block";
+    };
+
+    // Settings
+    $("settings-btn").onclick = () => {
+      $("sidebar").classList.add("open");
+      $("sidebar-overlay").classList.add("show");
+      $("userName").value = s.userName || "";
+    };
+    $("close-btn").onclick = closeSide;
+    $("sidebar-overlay").onclick = closeSide;
+    function closeSide() {
+      $("sidebar").classList.remove("open");
+      $("sidebar-overlay").classList.remove("show");
+    }
+
+    $("saveBtn").onclick = () => {
+      s.userName = $("userName").value.trim();
+      localStorage.setItem("ntp-light", JSON.stringify(s));
+      updateGreeting();
+      closeSide();
     };
 
     updateClock();
