@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>नयाँ ट्याब</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2367e8f9' stroke-width='2'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237dd3fc' stroke-width='2'><circle cx='12' cy='12' r='10'/><path d='M12 6v6l4 2'/></svg>">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@600;700;800&family=Outfit:wght@500;600;700&display=swap');
 
     * {
       margin: 0;
@@ -17,40 +17,73 @@
     body {
       height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      font-family: 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
+      justify-content: center;
+      font-family: 'Noto Sans Devanagari', 'Outfit', system-ui, sans-serif;
       font-weight: 700;
-      color: #f1f5f9;
-      text-align: center;
+      color: #f0f9ff;
       overflow: hidden;
-      background: #0f172a; /* Material dark navy */
+      background: radial-gradient(ellipse at 20% 50%, #1e1b4b 0%, #0f172a 45%, #020617 100%);
+      position: relative;
     }
 
-    /* ===== Liquid Glass ===== */
-    .glass {
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* Subtle star particles */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(1.5px 1.5px at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 70% 20%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 60%, rgba(255,255,255,0.25) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.3) 0%, transparent 100%);
+      background-size: 100% 100%;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    /* Analog Clock */
+    .container {
+      display: flex;
+      align-items: center;
+      gap: 80px;
+      max-width: 1100px;
+      width: 100%;
+      padding: 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== LEFT: Clock ===== */
+    .left {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .clock-container {
-      width: 210px;
-      height: 210px;
+      width: 240px;
+      height: 240px;
       border-radius: 50%;
       position: relative;
       cursor: pointer;
-      margin-bottom: 2rem;
-      transition: transform 0.25s ease;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 40px rgba(125, 211, 252, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .clock-container:hover {
       transform: scale(1.04);
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 0 50px rgba(125, 211, 252, 0.15);
     }
 
     .hand {
@@ -58,88 +91,106 @@
       bottom: 50%;
       left: 50%;
       transform-origin: bottom center;
-      border-radius: 8px;
-      background: #e2e8f0;
+      border-radius: 10px;
     }
     .hour-hand {
-      width: 6px;
-      height: 52px;
-      margin-left: -3px;
-      background: #cbd5e1;
+      width: 7px;
+      height: 58px;
+      margin-left: -3.5px;
+      background: #e0f2fe;
     }
     .minute-hand {
-      width: 4px;
-      height: 72px;
-      margin-left: -2px;
-      background: #e2e8f0;
+      width: 5px;
+      height: 82px;
+      margin-left: -2.5px;
+      background: #bae6fd;
     }
     .second-hand {
-      width: 2px;
-      height: 82px;
-      margin-left: -1px;
-      background: #67e8f9;
+      width: 2.5px;
+      height: 92px;
+      margin-left: -1.25px;
+      background: #7dd3fc;
     }
     .center-dot {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 11px;
-      height: 11px;
-      background: #67e8f9;
+      width: 13px;
+      height: 13px;
+      background: #7dd3fc;
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 12px #67e8f9;
+      box-shadow: 0 0 16px #7dd3fc;
     }
 
-    /* Digital */
     .digital-time {
       display: none;
-      font-size: 5.6rem;
+      font-size: 4.8rem;
       font-weight: 800;
-      letter-spacing: -3px;
-      margin-bottom: 1.4rem;
+      letter-spacing: -2px;
       cursor: pointer;
-      color: #f1f5f9;
+      color: #e0f2fe;
+      text-shadow: 0 0 30px rgba(125, 211, 252, 0.3);
+    }
+
+    /* ===== RIGHT: Content ===== */
+    .right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
     }
 
     .weekday {
-      font-size: 1.85rem;
+      font-size: 2.1rem;
       font-weight: 800;
-      letter-spacing: 1px;
-      margin-bottom: 0.35rem;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.3rem;
+      color: #e0f2fe;
     }
     .nepali-date {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      opacity: 0.85;
-      margin-bottom: 1.6rem;
+      opacity: 0.8;
+      margin-bottom: 1.4rem;
+      color: #bae6fd;
     }
     .greeting {
-      font-size: 1.45rem;
+      font-size: 1.7rem;
       font-weight: 700;
-      opacity: 0.9;
       margin-bottom: 2.2rem;
+      color: #f0f9ff;
     }
 
     /* Search */
     .search-box {
-      width: 90%;
-      max-width: 460px;
+      width: 100%;
+      max-width: 420px;
       position: relative;
-      margin-bottom: 2.6rem;
+      margin-bottom: 2.4rem;
     }
     .search-box input {
       width: 100%;
-      padding: 16px 52px 16px 24px;
-      font-size: 1.15rem;
+      padding: 15px 50px 15px 22px;
+      font-size: 1.1rem;
       font-weight: 600;
       border-radius: 50px;
-      border: none;
-      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      color: #f0f9ff;
       outline: none;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .search-box input:focus {
+      border-color: rgba(125, 211, 252, 0.4);
+      background: rgba(255, 255, 255, 0.1);
     }
     .search-box input::placeholder {
-      color: rgba(241, 245, 249, 0.45);
+      color: rgba(224, 242, 254, 0.4);
     }
     .search-box button {
       position: absolute;
@@ -148,41 +199,44 @@
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: #94a3b8;
-      font-size: 1.25rem;
+      color: #7dd3fc;
+      font-size: 1.2rem;
       cursor: pointer;
     }
 
-    /* Quick Links */
+    /* Links */
     .links {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.3rem;
       flex-wrap: wrap;
-      justify-content: center;
-      max-width: 680px;
+      margin-bottom: 2rem;
     }
     .link {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-decoration: none;
-      color: #f1f5f9;
-      width: 74px;
+      color: #e0f2fe;
+      width: 70px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       transition: transform 0.2s ease;
     }
     .link:hover {
       transform: translateY(-5px);
     }
     .link-icon {
-      width: 56px;
-      height: 56px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
       overflow: hidden;
     }
     .link-icon img {
@@ -192,57 +246,75 @@
     }
 
     .quote {
-      position: absolute;
-      bottom: 36px;
-      max-width: 560px;
       font-size: 1.05rem;
       font-weight: 600;
       font-style: italic;
-      opacity: 0.8;
-      padding: 0 20px;
+      opacity: 0.75;
+      max-width: 420px;
+      line-height: 1.5;
+      color: #bae6fd;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .container {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+      }
+      .right {
+        align-items: center;
+        text-align: center;
+      }
+      .links {
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Analog Clock -->
-  <div class="clock-container glass" id="analogClock">
-    <div class="hand hour-hand" id="hourHand"></div>
-    <div class="hand minute-hand" id="minuteHand"></div>
-    <div class="hand second-hand" id="secondHand"></div>
-    <div class="center-dot"></div>
+  <div class="container">
+    <!-- LEFT -->
+    <div class="left">
+      <div class="clock-container" id="analogClock">
+        <div class="hand hour-hand" id="hourHand"></div>
+        <div class="hand minute-hand" id="minuteHand"></div>
+        <div class="hand second-hand" id="secondHand"></div>
+        <div class="center-dot"></div>
+      </div>
+      <div class="digital-time" id="digitalTime">००:००</div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+      <div class="weekday" id="weekday">बुधबार</div>
+      <div class="nepali-date" id="nepaliDate">२४ भदौ, २०८३</div>
+      <div class="greeting" id="greeting">शुभ प्रभात</div>
+
+      <div class="search-box">
+        <form action="https://noai.duckduckgo.com/" method="get">
+          <input type="text" name="q" placeholder="के खोज्दै हुनुहुन्छ?" autofocus autocomplete="off">
+          <button type="submit">⌕</button>
+        </form>
+      </div>
+
+      <div class="links" id="links"></div>
+      <div class="quote" id="quote"></div>
+    </div>
   </div>
-
-  <!-- Digital Clock -->
-  <div class="digital-time" id="digitalTime">००:००</div>
-
-  <div class="weekday" id="weekday">बुधबार</div>
-  <div class="nepali-date" id="nepaliDate">२४ भदौ, २०८३</div>
-  <div class="greeting" id="greeting">शुभ प्रभात</div>
-
-  <div class="search-box">
-    <form action="https://noai.duckduckgo.com/" method="get">
-      <input class="glass" type="text" name="q" placeholder="वेब खोज्नुहोस्..." autofocus autocomplete="off">
-      <button type="submit">⌕</button>
-    </form>
-  </div>
-
-  <div class="links" id="links"></div>
-  <div class="quote" id="quote"></div>
 
   <script>
     const nepaliWeekdays = ["आइतबार","सोमबार","मङ्गलबार","बुधबार","बिहिबार","शुक्रबार","शनिबार"];
     const nepaliMonths = ["बैशाख","जेठ","असार","साउन","भदौ","असोज","कार्तिक","मंसिर","पुस","माघ","फागुन","चैत"];
     const nepaliDigits = ["०","१","२","३","४","५","६","७","८","९"];
 
-    function toNepali(num) {
-      return String(num).split("").map(d => nepaliDigits[d] || d).join("");
+    function toNepali(n) {
+      return String(n).split("").map(d => nepaliDigits[d] || d).join("");
     }
 
     function adToBs(y, m, d) {
-      let bsY = y + 56;
-      let bsM = m + 8;
-      let bsD = d + 16;
+      let bsY = y + 56, bsM = m + 8, bsD = d + 16;
       if (bsD > 30) { bsD -= 30; bsM++; }
       if (bsM > 12) { bsM -= 12; bsY++; }
       return `${toNepali(bsD)} ${nepaliMonths[bsM-1]}, ${toNepali(bsY)}`;
@@ -256,7 +328,7 @@
       "प्रकृति हतार गर्दैन, तर सबै कुरा पूरा हुन्छ। — लाओ त्जु"
     ];
 
-    const links = [
+    const linksData = [
       { name: "जिमेल", url: "https://mail.google.com" },
       { name: "यूट्युब", url: "https://youtube.com" },
       { name: "गिटहब", url: "https://github.com" },
@@ -265,10 +337,8 @@
       { name: "विकि", url: "https://wikipedia.org" }
     ];
 
-    let isAnalog = true;
-    let qIndex = 0;
-
     const $ = id => document.getElementById(id);
+    let qIndex = 0;
 
     function updateClock() {
       const now = new Date();
@@ -276,17 +346,13 @@
       const m = now.getMinutes();
       const s = now.getSeconds();
 
-      // Analog hands
-      const hourDeg = (h % 12) * 30 + m * 0.5;
-      const minuteDeg = m * 6;
-      const secondDeg = s * 6;
+      $("hourHand").style.transform = `rotate(${(h%12)*30 + m*0.5}deg)`;
+      $("minuteHand").style.transform = `rotate(${m*6}deg)`;
+      $("secondHand").style.transform = `rotate(${s*6}deg)`;
 
-      $("hourHand").style.transform = `rotate(${hourDeg}deg)`;
-      $("minuteHand").style.transform = `rotate(${minuteDeg}deg)`;
-      $("secondHand").style.transform = `rotate(${secondDeg}deg)`;
-
-      // Digital
-      $("digitalTime").textContent = toNepali(String(h).padStart(2,"0")) + ":" + toNepali(String(m).padStart(2,"0"));
+      $("digitalTime").textContent = 
+        toNepali(String(h).padStart(2,"0")) + ":" + 
+        toNepali(String(m).padStart(2,"0"));
     }
 
     function updateDate() {
@@ -309,49 +375,43 @@
     }
 
     function renderLinks() {
-      const container = $("links");
-      container.innerHTML = "";
-      links.forEach(l => {
+      const box = $("links");
+      box.innerHTML = "";
+      linksData.forEach(l => {
         const a = document.createElement("a");
         a.href = l.url;
         a.className = "link";
 
         const icon = document.createElement("div");
-        icon.className = "link-icon glass";
-
+        icon.className = "link-icon";
         try {
-          const domain = new URL(l.url).hostname.replace("www.", "");
+          const domain = new URL(l.url).hostname.replace("www.","");
           const img = document.createElement("img");
           img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
-          img.onerror = () => icon.textContent = "🔗";
+          img.onerror = () => icon.textContent = "✦";
           icon.appendChild(img);
         } catch {
-          icon.textContent = "🔗";
+          icon.textContent = "✦";
         }
-
         a.appendChild(icon);
 
         const span = document.createElement("span");
         span.textContent = l.name;
         a.appendChild(span);
-
-        container.appendChild(a);
+        box.appendChild(a);
       });
     }
 
-    // Toggle Analog ↔ Digital
+    // Toggle clock
     $("analogClock").onclick = () => {
-      isAnalog = false;
       $("analogClock").style.display = "none";
       $("digitalTime").style.display = "block";
     };
     $("digitalTime").onclick = () => {
-      isAnalog = true;
       $("digitalTime").style.display = "none";
       $("analogClock").style.display = "block";
     };
 
-    // Init
     updateClock();
     updateDate();
     updateGreeting();
@@ -360,7 +420,7 @@
 
     setInterval(updateClock, 1000);
     setInterval(updateDate, 60000);
-    setInterval(showQuote, 280000);
+    setInterval(showQuote, 300000);
   </script>
 </body>
 </html>
